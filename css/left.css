@@ -1,0 +1,75 @@
+/*LEFT SECTION*/
+
+.menu{
+    float: left;
+    margin-left: 30px;
+    width: 90%;
+    border-right:2px solid #d9d9d9;
+    height: 88vh;
+}
+
+.menu a{
+    text-decoration: none;
+    float: left;
+    margin-left: -25px;
+    width: 90%;
+}
+
+.feeds{
+    font-family:'A-OTF Shin Go Pro B';
+    font-weight:normal;
+    font-size:20px;
+    margin-bottom: 10px;
+    color:#464444;
+}
+
+.feeds a{
+    color:#464444;
+    transition:.3s;
+    margin-bottom: 5px;
+}
+
+.feeds a:hover{
+    transition:.5s;
+    color:#0f0e0e;
+    text-shadow: 0px 4px 10px #2a343d3a;
+}
+
+.trending-topics{
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 500;   
+    color:#4e4d4d;
+}
+
+.feeds .title, .trending-topics .title{
+    font-size:18px;
+}
+
+.feeds ul{
+    margin-top: -5px;
+    list-style: none;
+}
+
+.trending-topics ul{
+    margin-top: -5px;
+    list-style: none;    
+}
+
+.trending-topics a{
+    margin-bottom: 10px;
+    color:#4e4d4d;
+}
+.trend{
+    padding: 5px;
+    transition:.3s;
+}
+.trend:hover{
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    transition:.4s;
+    padding: 10px;
+    border-radius:50px;
+    border: 0px solid #ccc;
+    background: #fff;
+}

@@ -1,0 +1,55 @@
+.ql-toolbar{
+    border: 2px solid #d9d9d9 !important;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+}
+
+.editor{
+    margin-bottom: 20px;
+    border: 2px solid #d9d9d9 !important;
+    border-top: 0px !important;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    height: 100px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.reply-editor-wrapper{
+    float: left;
+    width: 95%;   
+    margin-left: 6%;
+}
+
+.reply-editor{
+    margin-bottom: 15px;
+    border: 2px solid #d9d9d9 !important;
+    border-top: 0px !important;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    height: 100px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.reply-area button{
+    float: right;
+    transition: ease .4s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color:#949495;
+    font-size: 15px;
+    width: 10%;
+
+    background-color: transparent;
+    border: 2px solid #D9D9D9;
+    border-radius:500px;
+}
+
+.reply-area button:hover{
+    transition: ease .4s;
+    border-color: #a6a5a5;
+    color:#767474;
+    background: rgb(124,159,163);
+    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+}

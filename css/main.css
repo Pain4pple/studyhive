@@ -1,0 +1,408 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@font-face {
+    font-family: "A-OTF Shin Go Pro B";
+    font-style: normal;
+    font-weight: normal;
+    src: local('A-OTF Shin Go Pro B'), url('../resources/webfont/AOTFShinGoProBold.woff') format('woff');
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    background: rgb(239,235,224);
+    background: linear-gradient(129deg, rgba(239,235,224,1) 0%, rgba(245,245,245,1) 14%, rgba(255,255,255,1) 48%, rgba(215,241,255,1) 78%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin:0px;
+    overflow-x: hidden;
+    color:#363636;
+}
+
+
+.left-section{
+    float: left;
+    padding: 15px;
+    position: fixed;
+    width:20%;
+}
+
+.left-space{
+    float: left;
+    padding: 15px;
+    width:20%;
+}
+
+.right-section{
+    float: left;
+    padding: 15px;
+    width:25%;
+}
+
+/*MID SECTION*/
+.mid-section{
+    float: left;
+    padding: 15px;
+    width:55%;
+    margin-top: 50px;
+}
+
+.placeholder{
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+}
+
+.button-system{
+    width:10%;
+    float:left;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.vote-button{
+    margin: 0 auto;
+    background: transparent;
+    border: 0;
+    color:#6C6C6C;
+    font-size: 1px;
+    max-width: 100%;
+}
+
+.upvote:hover{
+    color:#8BC34A
+}
+
+
+.downvote:hover{
+    color:#bc6641
+}
+
+.upvote-count{
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-align: center;
+    width: 100%;
+    color:#6C6C6C;
+}
+
+.no-deco-link{
+    text-decoration: none;
+    color:inherit;
+}
+
+.link-line{
+    color:inherit;
+    text-decoration: none;
+}
+
+.link-line:hover{
+    transition: ease .4s;
+    text-decoration: underline;
+}
+
+.container{
+    width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.post-header{
+    font-family: 'Montserrat', sans-serif;
+    color:#A09F9F;
+    width: 100%;
+    float:left;
+}
+
+.community-img{
+    float:left;
+    border-radius:500px;
+    height:100%;
+    width:5%;
+    border: 3px solid #D9D9D9;
+}
+
+.post-information{    
+    float:left;
+    width: 85%;
+    color:#6B6B6B;
+    font-size: 20px;
+    margin-left: 5px;
+}
+.post-information p{    
+   margin-top: 10px;
+}
+.community-name{
+    font-weight: 600;
+    font-size: 17px;
+}
+.op-info{
+    font-size: 14px;
+}
+.op-name{
+    font-weight: 500;
+    color:#6B6B6B;
+}
+.comment-component{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    padding-left: 20px;
+    margin-top: 10px;
+    color:#6C6C6C;
+    text-decoration: none;
+}
+
+.content-holder{
+    border-radius: 40px;
+    border: 3px solid #D9D9D9;
+    padding: 20px;
+    transition: ease .4s;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.content-holder:after{
+    content: " "; 
+    display: block;
+    clear: both;
+}
+
+/*.content-holder:before{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom:0;
+    left:0;
+    height: 20%;
+    width: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgb(255, 255, 255) 100%);
+}*/
+
+
+.content-holder:hover{
+    transition: ease .4s;
+    border-color: #a6a5a5;
+    background: rgb(124,159,163);
+    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+
+}
+
+.content-holder .title{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.content{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.post-wrapper{
+    height: inherit;
+}
+.image-container{
+    min-height: 500px;
+    max-height: 600px;
+    width: 100%;
+    padding-bottom:20px;
+    border-radius: 25px;
+}
+/*RIGHT SECTION*/
+.profile-container{
+    width:80%;
+    padding: 10px 5px 20px 5px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50px;
+    background-color: #ffffff;
+}
+
+.profile-container2{
+    width:80%;
+    padding: 10px 5px 20px 5px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50px;
+    background: rgb(230,246,252);
+    background: linear-gradient(157deg, rgba(230,246,252,1) 0%, rgba(252,252,252,1) 22%, rgba(246,250,251,1) 71%, rgba(209,243,255,1) 98%);
+    box-shadow: 0px 9px 15px 0px #25373b28;
+}
+
+.profile-holder{
+    box-sizing: border-box;
+}
+
+.profile-img{
+    float:left;
+    border-radius:500px;
+    width:35%;
+    height:auto;
+    margin-top:40px;
+    margin-left:35px;
+}
+
+.profile-info{
+    float:left;
+    width:40%;
+    padding:15px;
+}
+
+.profile-img2{
+    width:40%;
+    height:auto;
+    margin:0 auto;
+    margin-top:40px;
+    margin-left:35px;
+}
+
+.profile-name{
+    float:left;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 23px;
+    margin-top:70px;
+    margin-left:10px;
+    margin-bottom:-10px;
+}
+
+.profile-postsnum{
+    float:left;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    margin-left:10px;
+}
+
+.profilecontent-holder{
+    border-radius: 50px;
+    padding: 40px;
+    word-wrap: break-word;
+}
+
+.profilecontent-holder2{
+    border-radius: 50px;
+    padding: 0px 40px;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.profilecontent-holder .title{
+    margin-top:190px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.profilecontent-holder2 .title{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.profilecontent-holder .content{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    text-align:justify;
+    margin-left:15px;
+    margin-right:15px;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.profilecontent-holder2 .content{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    text-align:justify;
+    margin-left:25px;
+    margin-right:15px;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+#signup-btn2{
+    border: 4px solid rgb(255, 255, 255);
+    transition: ease .3s;
+    width: 100%;
+    padding: 20px;
+    background: rgb(214,255,247);
+    background: linear-gradient(158deg, rgba(214,255,247,1) 0%, rgba(124,199,239,1) 9%, rgba(98,183,237,1) 15%, rgba(64,162,233,1) 21%, rgba(50,153,232,1) 49%, rgba(184,236,244,1) 100%, rgba(22,109,180,1) 100%);
+    color: white;
+    
+    border-radius: 35px;
+    margin-bottom: 15px;
+    
+    font-family: "A-OTF Shin Go Pro B";
+    font-size: 18px;
+    font-weight: 500;
+    animation: breathing-glow 5s infinite;
+}
+
+#signup-btn2:hover, #signup-btn2:focus{
+    transition: ease .8s;
+    border: 4px solid rgb(113, 191, 255);
+    background-color: rgba(64,162,233,1);
+    color: white;
+}
+
+hr{
+    color: #d9d9d9;
+    margin:15px;
+}
+
+.button-wrapper{
+    position: relative;
+}
+
+#sparkles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: -2px;
+    margin-top: 5px;
+    fill: #ffe999;
+}
+
+#sparkles2{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: -2px;
+    margin-bottom: 10px;
+    fill: #ffe999;
+}
+  
+  @keyframes breathing-glow {
+    0% {
+        box-shadow:
+        0 0 0px #fff,
+        0px 0 0px rgba(6, 218, 255, 0.532),
+        0px 0 0px rgb(178, 255, 255);
+    }
+    50% {
+        box-shadow:
+        0 0 25px #fff,
+        -5px 0 45px rgba(6, 168, 255, 0.754),
+        5px 0 45px rgb(215, 178, 255);
+    }
+    100% {
+        box-shadow:
+        0 0 0px #fff,
+        0px 0 0px rgba(6, 218, 255, 0.532),
+        0px 0 0px rgb(178, 255, 255);
+    }
+  }

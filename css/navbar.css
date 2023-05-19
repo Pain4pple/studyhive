@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@font-face {
+    font-family: "A-OTF Shin Go Pro B";
+    font-style: normal;
+    font-weight: normal;
+    src: local("A-OTF Shin Go Pro B"), url('../resources/webfont/AOTFShinGoProBold.woff') format('woff');
+}
+
+/*NAVIGATION BAR*/
+.navigation-space{
+    height: 140px;
+}
+
+.navigation-bar{
+    box-sizing: border-box;
+    position: fixed;
+    padding:20px 100px;
+    background-color:white;
+    border-bottom: 3px solid #d9d9d9; 
+    width: 100%;
+
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:30px 10%;
+    z-index:1;
+}
+
+.navigation-bar li, .navigation-bar a{
+    font-family:"A-OTF Shin Go Pro B";
+    font-weight:normal;
+    font-size:25px;
+    color:#222222;
+    background-color: white;
+    text-decoration:none;
+    background:transparent;
+}
+
+.navigation-bar button{
+    font-family:"A-OTF Shin Go Pro B";
+    font-weight:normal;
+    font-size:20px;
+    color:#222222;
+    background-color: white;
+    text-decoration:none;
+    background:transparent;
+ 
+    border-radius:35px;
+}
+
+button{
+    border-style:solid;
+    width: 125px;
+}
+button:hover{
+    border-color:#8d8d8d;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.logo{
+    cursor: pointer;
+    width:130px;
+}
+.nav_links{
+    list-style:none;
+    font-family: "A-OTF Shin Go Pro B";
+}
+
+.nav_links li{
+    display:inline-block;
+    margin-left: 50px;
+    margin-right: 50px;
+    width:150px;
+}
+.nav_links li a {
+    transition: all 0.3s ease 0s;
+}
+.nav_links li a:hover{
+    color: #0088a9
+}
+
+.main-content {
+    height:100vh;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
