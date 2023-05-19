@@ -40,7 +40,7 @@ $communityInfo = getCommunityInfo($postInfo['CommunityID']);
             <div class="post">
               <div class="post-header">
                   <div>
-                      <img class="community-img" src="/StudyHive/resources/images/community image.jpg" alt="Community Image">
+                      <img class="community-img" src="/resources/images/community image.jpg" alt="Community Image">
                   </div>
                   <div class="post-information">
                       <a href="school-renderer.php?commID=<?php echo $communityInfo['CommunityID']?>" class="link-line"><p class="community-name">/<?php echo $communityInfo['ShortName'];?></p></a>
@@ -55,7 +55,7 @@ $communityInfo = getCommunityInfo($postInfo['CommunityID']);
                     <?php 
                     if($postInfo['Media'] != null || trim($postInfo['Media']) != "")
                     ?>
-                    <img src="/StudyHive/<?php echo $postInfo['Media']?>" class="post-media">
+                    <img src="/<?php echo $postInfo['Media']?>" class="post-media">
                   </div>
               </div>
               <div class="post-footer hr">
@@ -125,7 +125,7 @@ $communityInfo = getCommunityInfo($postInfo['CommunityID']);
               <div class="comment-group">
                   <div class="parent-comment">
                         <div class="comment-header">
-                        <img class="commenter-img" src="/StudyHive/resources/images/community image.jpg" alt="Community Image">
+                        <img class="commenter-img" src="/resources/images/community image.jpg" alt="Community Image">
                         <div class="comment-info">
                               <span class="commenter-name">abnoxy-123</span>
                               •
@@ -202,7 +202,7 @@ $communityInfo = getCommunityInfo($postInfo['CommunityID']);
                       <div class="hide-portion1">
                         <div class="child-comment">
                           <div class="comment-header">
-                            <img class="commenter-img" src="/StudyHive/resources/images/community image.jpg" alt="Community Image">
+                            <img class="commenter-img" src="/resources/images/community image.jpg" alt="Community Image">
                             <div class="comment-info">
                                   <span class="commenter-name">abnoxy-123</span>
                                   •
@@ -271,7 +271,7 @@ $communityInfo = getCommunityInfo($postInfo['CommunityID']);
                           </div>
                           <div class="second-child-comment">
                             <div class="comment-header">
-                              <img class="commenter-img" src="/StudyHive/resources/images/community image.jpg" alt="Community Image">
+                              <img class="commenter-img" src="/resources/images/community image.jpg" alt="Community Image">
                               <div class="comment-info">
                                     <span class="commenter-name">abnoxy-123</span>
                                     •

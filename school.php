@@ -27,19 +27,19 @@
                     <div class="carousel"
                         data-flickity='{ "imagesLoaded": true, "wrapAround": true , "autoPlay": 3000 }'>
                         <div class="gallery-cell"> <img class="banner-img"
-                                src="/StudyHive/resources/images/banner1.png" />
+                                src="/resources/images/banner1.png" />
                         </div>
                         <div class="gallery-cell"> <img class="banner-img"
-                                src="/StudyHive/resources/images/banner2.png" />
+                                src="/resources/images/banner2.png" />
                         </div>
                         <div class="gallery-cell"> <img class="banner-img"
-                                src="/StudyHive/resources/images/banner3.png" />
+                                src="/resources/images/banner3.png" />
                         </div>
                         <div class="gallery-cell"> <img class="banner-img"
-                                src="/StudyHive/resources/images/banner4.png" />
+                                src="/resources/images/banner4.png" />
                         </div>
                         <div class="gallery-cell"> <img class="banner-img"
-                                src="/StudyHive/resources/images/banner5.png" />
+                                src="/resources/images/banner5.png" />
                         </div>
                     </div>
                 </header>
@@ -62,7 +62,7 @@
                                     <span
                                         style="  background: none;  border: 0px none; margin: 0px; padding: 0px; position: relative;">
                                         <img class="school-logo"
-                                            src="/StudyHive<?php echo $schoolEntity['Logo']?>" />
+                                            src="<?php echo $schoolEntity['Logo']?>" />
                                     </span>
                                     <div>
                                         <h3><?php echo $schoolEntity['Name']?></h3>

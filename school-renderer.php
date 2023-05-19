@@ -37,9 +37,9 @@ $communityInfo = getCommunityInfo($commID);
 
             <div class="mid-section">
                 <div class="top-section">
-                    <div class="ust-banner" style="background-image:url(/StudyHive<?php echo $communityInfo['Header']?>);"></div>
+                    <div class="ust-banner" style="background-image:url(<?php echo $communityInfo['Header']?>);"></div>
                     <div class="profpic">
-                        <img class="ust-profpic" src="/StudyHive<?php echo $communityInfo['Logo']?>" />
+                        <img class="ust-profpic" src="<?php echo $communityInfo['Logo']?>" />
                     </div>
                     <h1><?php echo $communityInfo['Name']?></h1>
                 </div>
@@ -73,7 +73,7 @@ $communityInfo = getCommunityInfo($commID);
                                 <div class="post-wrapper">
                                     <div class="post-header">
                                         <div>
-                                            <img class="community-img" src="/StudyHive<?php echo $communityInfo['Logo']?>"
+                                            <img class="community-img" src="<?php echo $communityInfo['Logo']?>"
                                                 alt="Community Image">
                                         </div>
                                         <div class="post-information">
@@ -106,7 +106,7 @@ $communityInfo = getCommunityInfo($commID);
                                     <?php }?>
                                     <a href="post.php?postID=<?php echo $postRow['PostID'];?>" class="no-deco-link">
                                         <div class="image-container"
-                                            style="background:url('/StudyHive<?php echo $postRow['Media'];?>');background-size: cover;">
+                                            style="background:url('<?php echo $postRow['Media'];?>');background-size: cover;">
                                         </div>
                                     </a>
                                 </div>
