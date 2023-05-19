@@ -8,7 +8,7 @@
 
 /*NAVIGATION BAR*/
 .navigation-space{
-    height: 140px;
+    height: 105px;
 }
 
 .navigation-bar{
@@ -22,7 +22,7 @@
     display:flex;
     justify-content: space-between;
     align-items: center;
-    padding:30px 10%;
+    padding:10px 10%;
     z-index:1;
 }
 
