@@ -1,5 +1,6 @@
 <?php 
 session_start();
+date_default_timezone_set("Asia/Manila");
 include "php/db_conn.php";
 include "php/post-query.php";
 include "php/community-query.php";
@@ -59,17 +60,17 @@ $comments = getComments($postID);
                         </div>
                         <div class="post-holder">
                             <?php 
-                  if($postInfo['Media'] != null || trim($postInfo['Media']) != ""){
-                  ?>
+                            if($postInfo['Media'] != null || trim($postInfo['Media']) != ""){
+                            ?>
                             <p class="post-title" style="font-size:36px"><?php echo $postInfo['Title']?></p>
                             <div class="post-content">
                                 <?php echo $postInfo['Body']?>
                                 <img src="<?php echo $postInfo['Media']?>" class="post-media">
                             </div>
                             <?php 
-                  }
-                  else{
-                  ?>
+                            }
+                            else{
+                            ?>
                             <p class="post-title"><?php echo $postInfo['Title']?></p>
                             <div class="post-content">
                                 <?php echo $postInfo['Body']?>
@@ -115,19 +116,33 @@ $comments = getComments($postID);
                         </div>
                     </div>
                     <div class="add-comment">
-                        <div class="editor-wrapper">
-                            <div id="editor" class="editor"></div>
+                        <div class="editor-wrapper" id="commenteditorWrapper<?php echo $postInfo['PostID'] ?>">
+                            <div id="commentEditor<?php echo $postInfo['PostID'] ?>" class="editor"></div>
                         </div>
                         <button id="add-comment"><span>+</span> Add a Comment</button>
-                        <button id="submit-comment">Submit</button>
+                        <button id="commentTo<?php echo $postInfo['PostID']?>">Submit</button>
                     </div>
-                    <?php  
-              if (mysqli_num_rows($comments) < 1){
-              }       
-              else
-              while($commentRow = $comments->fetch_array()){
-                $commenterInfo = getCommenterInfo($commentRow['UserID']);
-              ?>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <script>
+                        $("#commentTo<?php echo $postInfo['PostID']?>").click(function(){
+                          var getText = document.getElementById("commentEditor<?php echo $postInfo['PostID'] ?>").getElementsByClassName("ql-editor");
+                          var text = $(getText).html();
+                          
+                          $("#commentwrapper<?php echo $postInfo['PostID'] ?>").load("php/add-comment-query.php",{
+                            PostID:<?php echo $postInfo['PostID']?>,
+                            UserID:<?php echo $_SESSION['userID']?>,
+                            Body:text+"",
+                          });
+                        });
+                    </script>
+                    <div class="comment-wrapper" id="commentwrapper<?php echo $postInfo['PostID'] ?>">
+                      <?php  
+                      if (mysqli_num_rows($comments) < 1){
+                      }       
+                      else
+                      while($commentRow = $comments->fetch_array()){
+                        $commenterInfo = getCommenterInfo($commentRow['UserID']);
+                      ?>
                     <div class="comment-group">
                         <div class="parent-comment">
                             <div class="comment-header">
@@ -174,28 +189,43 @@ $comments = getComments($postID);
                             </div>
                             <div class="reply-area">
                                 <div class="reply-editor-wrapper" id="replyarea<?php echo $commentRow['CommentID'] ?>">
+                                  <input name="replybody" type="hidden">
                                     <div id="replyeditor<?php echo $commentRow['CommentID'] ?>" class="reply-editor">
                                     </div>
                                     <script>
-                                    var quill2 = new Quill("#replyeditor<?php echo $commentRow['CommentID'] ?>", {
+                                    var replyquill = new Quill("#replyeditor<?php echo $commentRow['CommentID'] ?>", {
                                         theme: 'snow'
                                     });
                                     </script>
                                     <button id="submitreplyto<?php echo $commentRow['CommentID'] ?>">Reply</button>
                                     <button id="cancelreplyto<?php echo $commentRow['CommentID'] ?>"
-                                        onclick="reply('replyarea<?php echo $commentRow['CommentID'] ?>')">Cancel</button>
+                                        onclick="toggleEditor('replyarea<?php echo $commentRow['CommentID'] ?>')">Cancel</button>
                                 </div>
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                                <script>
+                                $("#submitreplyto<?php echo $commentRow['CommentID'] ?>").click(function(){
+                                  var getText = document.getElementById("replyeditor<?php echo $commentRow['CommentID'] ?>").getElementsByClassName("ql-editor");
+                                  var text = $(getText).html();
+                                  
+                                  $("#thread<?php echo $commentRow['CommentID'] ?>").load("php/reply-query.php",{
+                                    ParentCommentID:<?php echo $commentRow['CommentID']?>,
+                                    PostID:<?php echo $postInfo['PostID']?>,
+                                    UserID:<?php echo $_SESSION['userID']?>,
+                                    Body:text+"",
+                                  });
+                                });
+                                </script>
                             </div>
                             <div class="hide-portion1" id="thread<?php echo $commentRow['CommentID'] ?>">
                                 <?php 
-                        $replies = loadReplies($commentRow['CommentID']);
-                        if (mysqli_num_rows($replies) < 1){
-                        }
-                        else
-                        while($replyRow = $replies->fetch_array()){
-                          $replierInfo = getCommenterInfo($replyRow['UserID']);
-                        ?>
-                                <div class="child-comment">
+                                $replies = loadReplies($commentRow['CommentID']);
+                                if (mysqli_num_rows($replies) < 1){
+                                }
+                                else
+                                while($replyRow = $replies->fetch_array()){
+                                  $replierInfo = getCommenterInfo($replyRow['UserID']);
+                                ?>
+                                <div class="child-comment" id="child-comment<?php echo $commentRow['CommentID'] ?>">
                                     <div class="comment-header">
                                         <img class="commenter-img" src="<?php echo $replierInfo['ProfileImage'];?>"
                                             alt="Community Image">
@@ -260,93 +290,127 @@ $comments = getComments($postID);
                                                 onclick="toggleEditor('nestedreplyarea<?php echo $replyRow['ReplyID'] ?>')">Cancel</button>
                                         </div>
                                     </div>
-                                    <?php 
-                          $nestedReplies = loadNestedReplies($replyRow['ReplyID']);
-                          if (mysqli_num_rows($nestedReplies) < 1){
-                          }
-                          else
-                          while($nestedReplyRow = $nestedReplies->fetch_array()){
-                            $replierInfo = getCommenterInfo($nestedReplyRow['UserID']);
-                          ?>
-                                    <div class="second-child-comment">
-                                        <div class="comment-header">
-                                            <img class="commenter-img" src="<?php echo $replierInfo['ProfileImage'];?>"
-                                                alt="Community Image">
-                                            <div class="comment-info">
-                                                <span
-                                                    class="commenter-name"><?php echo $replierInfo['Username'];?></span>
-                                                •
-                                                <span
-                                                    class="comment-age"><?php echo getPostAge($nestedReplyRow['Date']);?></span>
-                                            </div>
-                                        </div>
-                                        <!--div class="vr" style="height:100vh;border-left:2px solid #d9d9d9"></div-->
-                                        <div class="comment-content">
-                                            <p><?php echo $nestedReplyRow['Body'];?></p>
-                                        </div>
-                                        <div class="comment-footer">
-                                            <div class="comment-vote-system">
-                                                <button id="upvote" class="vote-button upvote row">
-                                                    <svg id="upvote-svg" xmlns="http://www.w3.org/2000/svg" width="20"
-                                                        height="20" fill="currentColor" class="bi bi-arrow-up-circle"
-                                                        viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd"
-                                                            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
-                                                    </svg>
-                                                </button>
-                                                <span
-                                                    class="comment-upvote-count"><?php echo $nestedReplyRow['UpvoteCount'];?></span>
-                                                <button id="downvote" class="vote-button downvote row">
-                                                    <svg id="downvote-svg" xmlns="http://www.w3.org/2000/svg" width="20"
-                                                        height="20" fill="currentColor" class="bi bi-arrow-down-circle"
-                                                        viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd"
-                                                            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
-                                                    </svg>
-                                                </button>
-                                                <div class="comment-reply"><span class="button-combo"><button
-                                                            type="button" class="reply-link no-deco-link"
-                                                            id="nestedreplytoReply<?php echo $nestedReplyRow['NestedReplyID'] ?>"
-                                                            onclick="toggleEditor('secondnestedreplyarea<?php echo $nestedReplyRow['NestedReplyID'] ?>')"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" fill="currentColor"
-                                                                class="bi bi-chat-left-fill" viewBox="0 0 16 12">
-                                                                <path
-                                                                    d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                                            </svg></span><span class="reply-value">Reply</span></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="reply-area">
-                                            <div class="reply-editor-wrapper"
-                                                id="secondnestedreplyarea<?php echo $nestedReplyRow['NestedReplyID'] ?>">
-                                                <div id="secondnestedreplyeditor<?php echo $nestedReplyRow['NestedReplyID'] ?>"
-                                                    class="reply-editor"></div>
-                                                <script>
-                                                var quill3 = new Quill(
-                                                    "#secondnestedreplyeditor<?php echo $nestedReplyRow['NestedReplyID'] ?>", {
-                                                        theme: 'snow'
-                                                    });
-                                                </script>
-                                                <button
-                                                    id="submitsecondnestedreplyto<?php echo $nestedReplyRow['NestedReplyID'] ?>">Reply</button>
-                                                <button
-                                                    id="cancelsecondnestedreplyto<?php echo $nestedReplyRow['NestedReplyID'] ?>"
-                                                    onclick="toggleEditor('secondnestedreplyarea<?php echo $nestedReplyRow['NestedReplyID'] ?>')">Cancel</button>
-                                            </div>
-                                        </div>
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                                    <script>
+                                        $("#submitnestedreplyto<?php echo $replyRow['ReplyID'] ?>").click(function(){
+                                          var getText = document.getElementById("nestedreplyeditor<?php echo $replyRow['ReplyID'] ?>").getElementsByClassName("ql-editor");
+                                          var text = $(getText).html();
+                                          
+                                          $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
+                                            ParentReplyID:<?php echo $replyRow['ReplyID']?>,
+                                            PostID:<?php echo $postInfo['PostID']?>,
+                                            UserID:<?php echo $_SESSION['userID']?>,
+                                            Body:text+"",
+                                            ReplyTo:<?php echo $replierInfo['UserID']?>
+                                          });
+                                        });
+                                    </script>
+                                    <div class="second-nested-replies" id="nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>">
+                                      <?php 
+                                      $nestedReplies = loadNestedReplies($replyRow['ReplyID']);
+                                      if (mysqli_num_rows($nestedReplies) < 1){
+                                      }
+                                      else
+                                      while($nestedReplyRow = $nestedReplies->fetch_array()){
+                                        $replierInfo = getCommenterInfo($nestedReplyRow['UserID']);
+                                      ?>
+                                      <div class="second-child-comment">
+                                          <div class="comment-header">
+                                              <img class="commenter-img" src="<?php echo $replierInfo['ProfileImage'];?>"
+                                                  alt="Community Image">
+                                              <div class="comment-info">
+                                                  <span
+                                                      class="commenter-name"><?php echo $replierInfo['Username'];?></span>
+                                                  •
+                                                  <span
+                                                      class="comment-age"><?php echo getPostAge($nestedReplyRow['Date']);?></span>
+                                              </div>
+                                          </div>
+                                          <!--div class="vr" style="height:100vh;border-left:2px solid #d9d9d9"></div-->
+                                          <div class="comment-content">
+                                              <p><?php echo $nestedReplyRow['Body'];?></p>
+                                          </div>
+                                          <div class="comment-footer">
+                                              <div class="comment-vote-system">
+                                                  <button id="upvote" class="vote-button upvote row">
+                                                      <svg id="upvote-svg" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                          height="20" fill="currentColor" class="bi bi-arrow-up-circle"
+                                                          viewBox="0 0 16 16">
+                                                          <path fill-rule="evenodd"
+                                                              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
+                                                      </svg>
+                                                  </button>
+                                                  <span
+                                                      class="comment-upvote-count"><?php echo $nestedReplyRow['UpvoteCount'];?></span>
+                                                  <button id="downvote" class="vote-button downvote row">
+                                                      <svg id="downvote-svg" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                          height="20" fill="currentColor" class="bi bi-arrow-down-circle"
+                                                          viewBox="0 0 16 16">
+                                                          <path fill-rule="evenodd"
+                                                              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
+                                                      </svg>
+                                                  </button>
+                                                  <div class="comment-reply"><span class="button-combo"><button
+                                                              type="button" class="reply-link no-deco-link"
+                                                              id="nestedreplytoReply<?php echo $nestedReplyRow['NestedReplyID'] ?>"
+                                                              onclick="toggleEditor('secondnestedreplyarea<?php echo $nestedReplyRow['NestedReplyID'] ?>')"><svg
+                                                                  xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                  height="16" fill="currentColor"
+                                                                  class="bi bi-chat-left-fill" viewBox="0 0 16 12">
+                                                                  <path
+                                                                      d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                              </svg></span><span class="reply-value">Reply</span></button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="reply-area">
+                                              <div class="reply-editor-wrapper"
+                                                  id="secondnestedreplyarea<?php echo $nestedReplyRow['NestedReplyID'] ?>">
+                                                  <div id="secondnestedreplyeditor<?php echo $nestedReplyRow['NestedReplyID'] ?>"
+                                                      class="reply-editor"></div>
+                                                  <script>
+                                                  var quill3 = new Quill(
+                                                      "#secondnestedreplyeditor<?php echo $nestedReplyRow['NestedReplyID'] ?>", {
+                                                          theme: 'snow'
+                                                      });
+                                                  </script>
+                                                  <button
+                                                      id="submitsecondnestedreplyto<?php echo $nestedReplyRow['NestedReplyID'] ?>">Reply</button>
+                                                  <button
+                                                      id="cancelsecondnestedreplyto<?php echo $nestedReplyRow['NestedReplyID'] ?>"
+                                                      onclick="toggleEditor('secondnestedreplyarea<?php echo $nestedReplyRow['NestedReplyID'] ?>')">Cancel
+                                                  </button>
+                                                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                                                  <script>
+                                                      $("#submitsecondnestedreplyto<?php echo $nestedReplyRow['NestedReplyID'] ?>").click(function(){
+                                                        var getText = document.getElementById("secondnestedreplyeditor<?php echo $nestedReplyRow['NestedReplyID'] ?>").getElementsByClassName("ql-editor");
+                                                        var text = $(getText).html();
+                                                        
+                                                        $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
+                                                          ParentReplyID:<?php echo $nestedReplyRow['NestedReplyID']?>,
+                                                          PostID:<?php echo $postInfo['PostID']?>,
+                                                          UserID:<?php echo $_SESSION['userID']?>,
+                                                          Body:text+"",
+                                                          ReplyTo:<?php echo $replierInfo['UserID']?>
+                                                        });
+                                                      });
+                                                  </script>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <?php 
+                                      }
+                                      ?>
                                     </div>
-                                    <?php 
-                          }
-                          ?>
                                 </div>
                                 <?php 
-                        }
-                        ?>
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                     <?php } ?>
+                  </div>
                 </div>
             </div>
         </div>
@@ -354,7 +418,7 @@ $comments = getComments($postID);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
     <script>
-    var quill = new Quill('#editor', {
+    var quill = new Quill('#commentEditor<?php echo $postInfo['PostID'] ?>', {
         theme: 'snow'
     });
 
@@ -372,6 +436,36 @@ $comments = getComments($postID);
         let replyarea = document.getElementById(AreaID);
         $(replyarea).toggle("blind", 200);
     }
+
+    $(document).ready(function(){
+          
+          $("#commenteditorWrapper<?php echo $postInfo['PostID'] ?>").hide();
+          $("#commentTo<?php echo $postInfo['PostID'] ?>").hide();
+      
+            
+          $("#add-comment").click(function(){
+            $("#commenteditorWrapper<?php echo $postInfo['PostID'] ?>").toggle("blind",200);
+      
+            $("#commentTo<?php echo $postInfo['PostID'] ?>").toggle();
+      
+            $(this).text(function(i, text){
+              return text === "+ Add a Comment" ? "Cancel" : "+ Add a Comment";
+            })
+          });
+          
+          $("#commentTo<?php echo $postInfo['PostID'] ?>").click(function(){
+            $("#commenteditorWrapper<?php echo $postInfo['PostID'] ?>").toggle("blind",200);
+      
+            $("#commentTo<?php echo $postInfo['PostID'] ?>").toggle();
+      
+            $("#add-comment").text("+ Add a Comment");
+          });
+
+          $("#nav-placeholder").load("navbar.php");
+          $("#left-placeholder").load("left-sect.html");
+      
+          });
+          
     </script>
     <script src="js/jquery-ui-1.13.2.custom/jquery-ui.js"></script>
     <script src="js/script.js"></script>

@@ -124,6 +124,7 @@ include "php/community-query.php";
                     if (isset($_SESSION['userID']) && isset($_SESSION['username']))
                     {
                     include "php/user-query.php";
+                    $userID = $_SESSION['userID'];
                     loadUser();
                     ?>
                 <div class="profile-container">
