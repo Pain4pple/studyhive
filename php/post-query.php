@@ -11,21 +11,39 @@ function getPostAge($date){
     $now = new DateTime();
     $diff=date_diff($date,$now);
     if($diff->y !=0)
+     if($diff->y==1)
+     echo $diff->y.' year ago';
+     else
      echo $diff->y.' years ago';
 
     else if($diff->m!=0)
+     if($diff->m==1)
+     echo $diff->m.' month ago';
+     else
      echo $diff->m.' months ago';
     
     else if($diff->d!=0)
+     if($diff->d==1)
+     echo $diff->d.' day ago';
+     else
      echo $diff->d.' days ago';
     
     else if($diff->h!=0)
+     if($diff->h==1)
+     echo $diff->h.' hour ago';
+     else
      echo $diff->h.' hours ago';
 
     else if($diff->i!=0)
+     if($diff->i==1)
+     echo $diff->i.' minute ago';
+     else
      echo $diff->i.' minutes ago';
     
-    else if($diff->s!=0) 
+    else if($diff->s!=0)
+     if($diff->s==1)
+     echo $diff->s.' second ago';
+     else 
      echo $diff->s.' seconds ago';
     
     else 

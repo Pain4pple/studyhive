@@ -13,7 +13,7 @@ include "php/db_conn.php";
           <ul class="nav_links">
             <li><a href="homepage.php">Home</a></li>
             <li><a href="school.php">School</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="profile.php">Profile</a></li>
           </ul>
         </nav>
         <a class="search" href="#">

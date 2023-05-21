@@ -57,9 +57,9 @@ include "php/community-query.php";
                             <div class="post-wrapper">
                                 <div class="post-header">
                                     <div>
-                                                <?php 
-                                                $communityInfo = getCommunityInfo($postRow['CommunityID']);
-                                                ?>
+                                      <?php 
+                                       $communityInfo = getCommunityInfo($postRow['CommunityID']);
+                                       ?>
                                         <img class="community-img" src="<?php echo $communityInfo['Logo'];?>"
                                             alt="Community Image">
                                     </div>
