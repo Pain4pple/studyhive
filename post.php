@@ -127,12 +127,15 @@ $comments = getComments($postID);
                         $("#commentTo<?php echo $postInfo['PostID']?>").click(function(){
                           var getText = document.getElementById("commentEditor<?php echo $postInfo['PostID'] ?>").getElementsByClassName("ql-editor");
                           var text = $(getText).html();
-                          
+                          <?php $allow = validateUser(); 
+                                                        
+                          if ($allow==true){?>
                           $("#commentwrapper<?php echo $postInfo['PostID'] ?>").load("php/add-comment-query.php",{
                             PostID:<?php echo $postInfo['PostID']?>,
                             UserID:<?php echo $_SESSION['userID']?>,
                             Body:text+"",
                           });
+                          <?php }?>
                         });
                     </script>
                     <div class="comment-wrapper" id="commentwrapper<?php echo $postInfo['PostID'] ?>">
@@ -206,13 +209,16 @@ $comments = getComments($postID);
                                 $("#submitreplyto<?php echo $commentRow['CommentID'] ?>").click(function(){
                                   var getText = document.getElementById("replyeditor<?php echo $commentRow['CommentID'] ?>").getElementsByClassName("ql-editor");
                                   var text = $(getText).html();
-                                  
+                                  <?php $allow = validateUser(); 
+                                                        
+                                  if ($allow==true){?>
                                   $("#thread<?php echo $commentRow['CommentID'] ?>").load("php/reply-query.php",{
                                     ParentCommentID:<?php echo $commentRow['CommentID']?>,
                                     PostID:<?php echo $postInfo['PostID']?>,
                                     UserID:<?php echo $_SESSION['userID']?>,
                                     Body:text+"",
                                   });
+                                  <?php }?>
                                 });
                                 </script>
                             </div>
@@ -295,7 +301,9 @@ $comments = getComments($postID);
                                         $("#submitnestedreplyto<?php echo $replyRow['ReplyID'] ?>").click(function(){
                                           var getText = document.getElementById("nestedreplyeditor<?php echo $replyRow['ReplyID'] ?>").getElementsByClassName("ql-editor");
                                           var text = $(getText).html();
-                                          
+                                          <?php $allow = validateUser(); 
+                                                        
+                                          if ($allow==true){?>
                                           $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
                                             ParentReplyID:<?php echo $replyRow['ReplyID']?>,
                                             PostID:<?php echo $postInfo['PostID']?>,
@@ -303,6 +311,7 @@ $comments = getComments($postID);
                                             Body:text+"",
                                             ReplyTo:<?php echo $replierInfo['UserID']?>
                                           });
+                                        <?php }?>
                                         });
                                     </script>
                                     <div class="second-nested-replies" id="nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>">
@@ -385,7 +394,9 @@ $comments = getComments($postID);
                                                       $("#submitsecondnestedreplyto<?php echo $nestedReplyRow['NestedReplyID'] ?>").click(function(){
                                                         var getText = document.getElementById("secondnestedreplyeditor<?php echo $nestedReplyRow['NestedReplyID'] ?>").getElementsByClassName("ql-editor");
                                                         var text = $(getText).html();
+                                                        <?php $allow = validateUser(); 
                                                         
+                                                        if ($allow==true){?>
                                                         $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
                                                           ParentReplyID:<?php echo $nestedReplyRow['NestedReplyID']?>,
                                                           PostID:<?php echo $postInfo['PostID']?>,
@@ -393,6 +404,7 @@ $comments = getComments($postID);
                                                           Body:text+"",
                                                           ReplyTo:<?php echo $replierInfo['UserID']?>
                                                         });
+                                                        <?php }?>
                                                       });
                                                   </script>
                                               </div>
@@ -421,6 +433,11 @@ $comments = getComments($postID);
     var quill = new Quill('#commentEditor<?php echo $postInfo['PostID'] ?>', {
         theme: 'snow'
     });
+    function callModal(){
+        $('#login-modal').fadeIn().css("display", "flex");
+        $('.signup-form').hide();
+        $('.login-form').fadeIn();
+    }
 
     function hidePortion(HidePortionID, ButtonID) {
         let hideportion = document.getElementById(HidePortionID);

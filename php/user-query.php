@@ -41,4 +41,12 @@
     return $userInfo = $userInfo->fetch_assoc();
   }        
 
+  function validateUser(){
+    if (isset($_SESSION['userID']) && isset($_SESSION['sessID'])){
+        return true;    
+    }
+    else{
+        return false;
+    }
+}
 ?>

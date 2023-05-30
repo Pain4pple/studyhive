@@ -84,6 +84,7 @@ if (isset($_POST['email'])&&isset($_POST['uname'])&&isset($_POST['password'])){
                         $row = mysqli_fetch_assoc($result);
                             $_SESSION['userID'] = $row['UserID'];
                             $_SESSION['username'] = $row['Username'];
+                            $_SESSION['sessID'] = session_id();
                     }
             }
             header("Location: ../homepage.php");

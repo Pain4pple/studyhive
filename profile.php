@@ -40,16 +40,18 @@ include "php/community-query.php";
                             <div class="post-wrapper">
                                 <div class="activity-header">
                                     <div>
-                                                <?php 
+                                        <?php 
                                                 $communityInfo = getCommunityInfo($postRow['CommunityID']);
                                                 ?>
                                         <img class="community-img" src="<?php echo $communityInfo['Logo'];?>"
                                             alt="Community Image">
                                     </div>
                                     <div class="post-information">
-                                        <p><a href="school-renderer.php?commID=<?php echo $communityInfo['CommunityID']?>" class="link-line"><span class="community-name">/<?php echo $communityInfo['ShortName'];?></span></a>
-                                                
-                                                <span class="op-info">•
+                                        <p><a href="school-renderer.php?commID=<?php echo $communityInfo['CommunityID']?>"
+                                                class="link-line"><span
+                                                    class="community-name">/<?php echo $communityInfo['ShortName'];?></span></a>
+
+                                            <span class="op-info">•
                                                 posted by
                                                 <span class="op-name"><?php 
                                                 $op = $postRow['UserID'];
@@ -59,7 +61,8 @@ include "php/community-query.php";
                                                 $OPInfo = $OPResults->fetch_assoc();
                                                 
                                                 echo $OPInfo['Username'];
-                                                ?></span> <?php echo getPostAge($postRow['Date']);?></span></p>
+                                                ?></span> <?php echo getPostAge($postRow['Date']);?></span>
+                                        </p>
                                         <div class="hr"></div>
                                     </div>
                                 </div>
@@ -98,26 +101,30 @@ include "php/community-query.php";
                     $userID = $_SESSION['userID'];
                     loadUser();
                     ?>
-                <div class="profile-container">
-                   <div class="profile-wrapper">
-                   <div class="profile-img-wrapper">
-                        <img class="profile-img" src="<?php echo $_SESSION['profile-img'] ?>" />
+                <div class="hehe" id="hehe">
+                    <div class="profile-container" id="profile-container">
+                        <img class="logoID" src="resources/images/logoID.png" />
+                        <div class="profile-wrapper">
+                            <div class="profile-img-wrapper">
+                                <img class="profile-img" src="<?php echo $_SESSION['profile-img'] ?>" />
+                            </div>
+                            <div class="profile-info-wrapper">
+                                <p class="profile-name"><?php echo $_SESSION['username'] ?></p>
+                                <p class="profile-date">Date Joined: <?php echo $_SESSION['datejoined'] ?></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="profile-info-wrapper">
-                        <p class="profile-name"><?php echo $_SESSION['username'] ?></p>
-                        <p class="profile-date">Date Joined: <?php echo $_SESSION['datejoined'] ?></p>
+                    <div class="bio-container" id="bio-container">
+                        <div class="bio-wrapper">
+                            <p class="bio-header">About me:</p>
+                            <p class="bio-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua. </p>
+                        </div>
                     </div>
-                   </div>
                 </div>
-                <div class="bio-container">
-                   <div class="bio-wrapper">
-                        <p class="bio-header">About me:</p>
-                        <p class="bio-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                    </div>
-                   </div>
-                </div>
-                <?php }?>
             </div>
+            <?php }?>
+        </div>
         </div>
 
     </body>
@@ -141,6 +148,11 @@ include "php/community-query.php";
             $('.signup-form').fadeIn();
         });
 
+        
+        $('#hehe').on("click", function(event) {
+            $('#profile-container').toggleClass('rotate');
+            $('#bio-container').toggleClass('rotate-reset');
+        });
 
     });
     </script>

@@ -33,8 +33,9 @@ if (!isset($_SESSION['userID']) && !isset($_SESSION['username']))
                         $row = mysqli_fetch_assoc($result);
                         if($row['Username'] == $uname && $row['Password'] == $hashedPass){
                             $_SESSION['userID'] = $row['UserID'];
-                            $_SESSION['username'] = $row['Username'];
-        
+                            $_SESSION['username'] = $row['Username'];                            
+                            $_SESSION['sessID'] = session_id();
+
                             header("Location: ../homepage.php?".$_SESSION['userID']."-".$_SESSION['username']);
                             exit();
                         }else{
