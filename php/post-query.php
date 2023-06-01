@@ -57,10 +57,33 @@ function getCommunityPosts($ID){
     return $communityPosts;
 }
 
+function getUserPosts($ID){
+    include "db_conn.php";
+    $sql = "SELECT * FROM posts WHERE UserID = '$ID' ORDER BY Date DESC";
+    $userPosts = mysqli_query($conn, $sql);
+    return $userPosts;
+}
+
 function getPostInfo($ID){
     include "db_conn.php";
     $sql = "SELECT * FROM posts WHERE PostID = '$ID'";
     $postInfo = mysqli_query($conn, $sql);
     return $postInfo = $postInfo->fetch_assoc();
+}
+
+function checkIfOwner($userID,$postID){
+    include "db_conn.php";
+    $sql = "SELECT * FROM posts WHERE PostID = '$postID'";
+    $postInfo = mysqli_query($conn, $sql);
+    $postInfo = $postInfo->fetch_assoc();
+
+    if($postInfo['UserID']==$userID)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 ?>

@@ -45,7 +45,7 @@ $comments = getComments($postID);
                     <div class="wrapper">
                         <div class="post-header">
                             <div>
-                                <img class="community-img" src="/resources/images/community image.jpg"
+                                <img class="community-img" src="<?php echo $communityInfo['Logo']?>"
                                     alt="Community Image">
                             </div>
                             <div class="post-information">
@@ -302,7 +302,7 @@ $comments = getComments($postID);
                                             </script>
                                             <button
                                                 id="submitnestedreplyto<?php echo $replyRow['ReplyID'] ?>">Reply</button>
-                                            <button id="cancelnestedreplyto<?php echo $replyRow['ReplyID'] ?>"
+                                                <button id="cancelnestedreplyto<?php echo $replyRow['ReplyID'] ?>"
                                                 onclick="toggleEditor('nestedreplyarea<?php echo $replyRow['ReplyID'] ?>')">Cancel</button>
                                         </div>
                                     </div>

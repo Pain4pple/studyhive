@@ -20,9 +20,6 @@
         <div class="navigation-space">
         </div>
         <div class="main-content">
-            <div class="left-space">
-            </div>
-            <div class="mid-section">
                 <header class="block w-full">
                     <div class="carousel"
                         data-flickity='{ "imagesLoaded": true, "wrapAround": true , "autoPlay": 3000 }'>
@@ -64,7 +61,7 @@
                                         <img class="school-logo"
                                             src="<?php echo $schoolEntity['Logo']?>" />
                                     </span>
-                                    <div>
+                                    <div class="informasyon">
                                         <h3><?php echo $schoolEntity['Name']?></h3>
                                         <p><?php echo $schoolEntity['Country']?></p>
                                     </div>
@@ -76,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        
         </div>
         </div>
         </div>

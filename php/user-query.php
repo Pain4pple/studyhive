@@ -13,13 +13,13 @@
   
   $sql = "SELECT * FROM posts WHERE UserID = '$userID'";
   $result = mysqli_query($conn, $sql);
-
-  if (mysqli_num_rows($result) === 1){
-      $row = mysqli_fetch_assoc($result);
-          $_SESSION['numberOfPost'] = mysqli_num_rows($result);
-  }
+  if (mysqli_num_rows($result) >= 1){
+      $_SESSION['hasPosts'] = true;
+      $_SESSION['numberOfPost'] = mysqli_num_rows($result);
+    }
   else{
-    $_SESSION['numberOfPost'] = 0;
+    $_SESSION['hasPosts'] = false;
+    $_SESSION['numberOfPost'] = mysqli_num_rows($result);
   }
 
   $sql = "SELECT * FROM comments WHERE UserID = '$userID'";
@@ -49,5 +49,7 @@
         return false;
     }
   }
+
+
   
 ?>

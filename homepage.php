@@ -8,7 +8,6 @@ include "php/load-button-system.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -77,12 +76,13 @@ include "php/load-button-system.php";
                                 <a href="post.php?postID=<?php echo $postRow['PostID'];?>" class="no-deco-link">
                                     <div class="content"><?php echo $postRow['Body'];?></div>
                                 </a>
-                                <?php }?>
+                                <?php }else{?>
                                 <a href="post.php?postID=<?php echo $postRow['PostID'];?>" class="no-deco-link">
                                     <div class="image-container"
                                         style="background:url('<?php echo $postRow['Media'];?>');background-size: cover;">
                                     </div>
                                 </a>
+                                <?php }?>
                             </div>
                         </div>
                         <div class="comment-component">
@@ -126,15 +126,17 @@ include "php/load-button-system.php";
 
                         <p class="title">Recent Posts</p>
                         <?php 
-                        if ($_SESSION['numberOfPost']!=0){ 
+                        if ($_SESSION['hasPosts']==true){ 
                             $sql = "SELECT * FROM posts WHERE UserID = '$userID' ORDER BY Date DESC LIMIT 4";
                             $recentActivities = mysqli_query($conn, $sql);
-                            if (mysqli_num_rows($recentActivities) === 1){
+                            if (mysqli_num_rows($recentActivities) >= 1){
                                 while($recentrowActivities = $recentActivities->fetch_array()){
+                                    $date = date_create($recentrowActivities['Date']);
+                                    $date = date_format($date,"F d, Y");
                                 ?>
                         <div class="content">
                             <a href="post.php?postID=<?php echo $recentrowActivities['PostID'];?>"
-                                class="no-deco-link"><?php echo $recentrowActivities['Title'];?></a>
+                                class="no-deco-link"><?php echo $recentrowActivities['Title'];?> - <i><?php echo $date;?></i></a>
                         </div>
                         <hr>
                         <?php

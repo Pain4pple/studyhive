@@ -268,3 +268,13 @@ h3{
   width: 100%;
   float: left;
 }
+
+.informasyon p{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position:relative;
+  text-align:left;
+  margin-left:100px;
+  margin-top:-10px;
+}

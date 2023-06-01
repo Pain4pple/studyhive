@@ -7,8 +7,8 @@ function loadButtonSystem($ID){
     if ($session==true){
         $UserID = $_SESSION['userID'];
         $sql = "SELECT * FROM uservotes WHERE PostID = '$ID' AND UserID = '$UserID'";
-        $userVotes = mysqli_query($conn, $sql);
-        $userVotes = $userVotes->fetch_assoc();
+        $userVotesResults = mysqli_query($conn, $sql);
+        $userVotes = $userVotesResults->fetch_assoc();
 
         $sql = "SELECT * FROM posts WHERE PostID = '$ID'";
         $postRow = mysqli_query($conn, $sql);
@@ -62,6 +62,7 @@ function loadButtonSystem($ID){
         });
     </script>
     <?php
+    if(mysqli_num_rows($userVotesResults) === 1){
         if($userVotes['Vote']==1)
         { 
         ?>
@@ -89,6 +90,7 @@ function loadButtonSystem($ID){
              document.getElementById("upvote-count<?php echo $postRow['PostID']?>").style.color="#6C6C6C";
          </script>
         <?php }
+    }
 }
 else{
     $sql = "SELECT * FROM posts WHERE PostID = '$ID'";
@@ -110,6 +112,38 @@ else{
                 d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
         </svg>
     </button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script>
+        $("#upvote<?php echo $postRow['PostID']?>").click(function(){
+        <?php
+        if ($session==true){?>
+            $("#button-system<?php echo $postRow['PostID']?>").load("php/upvote.php",{
+                PostID:<?php echo $postRow['PostID']?>,
+                UserID:<?php echo $UserID?>,
+            });
+        <?php }
+        else{?>
+            $('#login-modal').fadeIn().css("display", "flex");
+            $('.signup-form').hide();
+            $('.login-form').fadeIn();                                          
+        <?php }?>
+        });
+        
+        $("#downvote<?php echo $postRow['PostID']?>").click(function(){
+        <?php 
+        if ($session==true){?>
+            $("#button-system<?php echo $postRow['PostID']?>").load("php/downvote.php",{
+            PostID:<?php echo $postRow['PostID']?>,
+            UserID:<?php echo $UserID?>,
+            });
+        <?php }
+        else{?>
+            $('#login-modal').fadeIn().css("display", "flex");
+            $('.signup-form').hide();
+            $('.login-form').fadeIn();                                          
+        <?php }?>
+        });
+    </script>
     <?php
 }
 }

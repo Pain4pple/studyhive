@@ -202,8 +202,10 @@ h1{
     float:left;
     border-radius:500px;
     height:100%;
-    width:7%;
+    width:5%;
     border: 3px solid #D9D9D9;
+    margin-left:20px;
+    margin-top:3px;
 }
 
 .post-information{    
@@ -236,15 +238,11 @@ h1{
     text-decoration: none;
 }
 
-.create-holder{
-    margin: 0 auto;
-}
-
 #createInput{
-    width: 75%;
     float:left;
-    margin-left: 15px;
-    margin-top: 10px;
+    width: 70%;
+    margin-left: 20px;
+    margin-top: 2px;
     padding: 10px;
     border: 3px solid #D9D9D9;
     background-color: transparent; 
@@ -269,27 +267,100 @@ h1{
     clear: both;
 }
 
-/*.content-holder:before{
-    content: '';
-    display: block;
-    position: absolute;
-    bottom:0;
-    left:0;
-    height: 20%;
-    width: 100%;
-    background: linear-gradient(to bottom, transparent 0%, rgb(255, 255, 255) 100%);
-}*/
+.form-holder{
+    border-radius: 40px;
+    padding: 20px;
+    transition: ease .4s;
+    word-wrap: break-word;
+    overflow: hidden;
+}
 
-.create-container:hover{
+.title-input{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 15px;
+    border: 3px solid #D9D9D9;
+    padding: 10px;
+    width: 100%;
+    transition: ease .4s;
+    word-wrap: break-word;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.title-input::-webkit-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:#6C6C6C;
+  }
+  
+  .title-input:-ms-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:#6C6C6C;
+  }
+  
+  .title-input:-moz-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:#6C6C6C;
+  }
+  
+  .title-input::-moz-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:#6C6C6C;
+  }
+
+  .ql-toolbar{
+    border: 3px solid #d9d9d9 !important;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.posteditor{
+    margin-bottom: 20px;
+    border: 3px solid #d9d9d9 !important;
+    border-top: 0px !important;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    height: 100px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.post-button{
+    transition: ease .4s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color:#949495;
+    font-size: 15px;
+    width: 20%;
+    padding: 10px 5px 10px 5px;
+
+    background-color: transparent;
+    border: 2px solid #D9D9D9;
+    border-radius:500px;
+    cursor: pointer;
+}
+
+.post-button:hover{
     transition: ease .4s;
     border-color: #a6a5a5;
     background: rgb(124,159,163);
     background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
 }
 
-.create-container:hover #createInput{
-    transition: ease .4s;
-    border-color: #a6a5a5;
+.editor-wrapper{
+    margin-bottom: 10px;
+}
+
+#createInput, #posteditor, .post-button, .ql-toolbar{
     background: white;
 }
 
@@ -358,4 +429,28 @@ h1{
 .link-line:hover{
     transition: ease .4s;
     text-decoration: underline;
+}
+.attach-picbtn{
+    float: left;
+    width:5%;
+    margin-left:15px;
+    margin-top:10px;
+    background-color:transparent;
+    border-style:none;
+}
+.attach-linkbtn{
+    float: left;
+    width:5%;
+    margin-left:10px;
+    margin-top:10px;
+    background-color:transparent;
+    border-style:none;
+}
+.upload-img{
+    height:20px;
+    opacity:.5;
+}
+.attach-link{
+    height:20px;
+    opacity:.5;
 }
