@@ -271,6 +271,7 @@ body{
 .profile-name{
     float:left;
     font-family: 'Montserrat', sans-serif;
+    width: 75%;
     font-weight: 700;
     font-size: 23px;
     margin-top:70px;

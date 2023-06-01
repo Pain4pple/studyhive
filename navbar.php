@@ -1,6 +1,9 @@
 <?php 
 session_start();
 include "php/db_conn.php";
+include "php/user-query.php";
+
+$session = validateUser();
 ?>
 <head>
     <link rel="stylesheet" href="css/modal.css"/>
@@ -13,12 +16,24 @@ include "php/db_conn.php";
           <ul class="nav_links">
             <li><a href="homepage.php">Home</a></li>
             <li><a href="school.php">School</a></li>
-            <li><a href="profile.php">Profile</a></li>
+            <?php 
+            if ($session == true)
+            {
+            ?>  
+            <li><a href="profile.php?profUser=<?php echo $_SESSION['userID']?>">Profile</a></li>
+            <?php
+            }
+            else{
+            ?> 
+            <li><a id="profileDisable">Profile</a></li>
+            <?php
+            }
+            ?> 
           </ul>
         </nav>
         <a class="search" href="#">
         <?php 
-        if (!isset($_SESSION['userID']) && !isset($_SESSION['username']))
+        if ($session == false)
         {
         ?>  
         <button id="login-show">Log-In</button>
@@ -121,6 +136,11 @@ include "php/db_conn.php";
       <script src="js/script.js"></script>
       <script>
         $(function() {
+          $('#profileDisable').click(function() {
+          $('#login-modal').fadeIn().css("display", "flex");
+          $('.signup-form').hide();
+          $('.login-form').fadeIn();
+        });
 
         $('#login-show').click(function() {
           $('#login-modal').fadeIn().css("display", "flex");
