@@ -1,5 +1,5 @@
    
-    const upvoteCounter = document.getElementById("upvote-count");
+    /*const upvoteCounter = document.getElementById("upvote-count");
     const upvoteCounterInt = parseInt(document.getElementById("upvote-count").innerHTML);
     const upvoteBtn = document.getElementById("upvote");
     const upvoteSVG = document.getElementById("upvote-svg");
@@ -18,4 +18,4 @@
         upvoteSVG.style.fill="#6C6C6C";
         upvoteCounter.style.color="#bc6641";
         upvoteCounter.innerHTML = upvoteCounterInt - 1;
-    }
+    }*/

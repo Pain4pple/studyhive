@@ -392,11 +392,10 @@ $comments = getComments($postID);
                                                   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                                                   <script>
                                                       $("#submitsecondnestedreplyto<?php echo $nestedReplyRow['NestedReplyID'] ?>").click(function(){
+                                                        <?php $allow = validateUser(); 
+                                                        if ($allow==true){?>
                                                         var getText = document.getElementById("secondnestedreplyeditor<?php echo $nestedReplyRow['NestedReplyID'] ?>").getElementsByClassName("ql-editor");
                                                         var text = $(getText).html();
-                                                        <?php $allow = validateUser(); 
-                                                        
-                                                        if ($allow==true){?>
                                                         $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
                                                           ParentReplyID:<?php echo $nestedReplyRow['NestedReplyID']?>,
                                                           PostID:<?php echo $postInfo['PostID']?>,
@@ -404,6 +403,11 @@ $comments = getComments($postID);
                                                           Body:text+"",
                                                           ReplyTo:<?php echo $replierInfo['UserID']?>
                                                         });
+                                                        <?php }
+                                                        else{?>
+                                                            $('#login-modal').fadeIn().css("display", "flex");
+                                                            $('.signup-form').hide();
+                                                            $('.login-form').fadeIn();                                          
                                                         <?php }?>
                                                       });
                                                   </script>
