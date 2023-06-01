@@ -2,7 +2,10 @@
 session_start();
 include "php/db_conn.php";
 include "php/community-query.php";
+include "php/user-query.php";
 
+$userID = $_SESSION['userID'];
+loadUser();
 $commID = isset($_GET['commID']) ? $_GET['commID'] : null;
 
 $communityInfo = getCommunityInfo($commID);
@@ -44,7 +47,18 @@ $communityInfo = getCommunityInfo($commID);
                     <h1><?php echo $communityInfo['Name']?></h1>
                 </div>
                 <div class="post-section">
-                    <?php 
+                    <div class="placeholder row">
+                        <div class="create-container">
+                            <div class="create-holder">
+                                <img class="user-img" src="<?php echo $_SESSION['profile-img']?>"
+                                                alt="Community Image">
+                                <a href="create-post.php?commID=<?php echo $communityInfo['CommunityID'];?>" class="no-deco-link">
+                                    <input type="text" name="createInput" id="createInput" value="Create a post">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <?php 
                 include "php/post-query.php";
                 
                 $postResults = getCommunityPosts($commID);
@@ -138,7 +152,7 @@ $communityInfo = getCommunityInfo($commID);
                             <p class="community-DOC">Created <?php 
                             $now = new DateTime($communityInfo['Date']);
                             $timestring = $now->format('m/d/Y');
-                            echo $timestring
+                            echo $timestring;
                             ?>
                             </p>
                         </div>
@@ -157,20 +171,14 @@ $communityInfo = getCommunityInfo($commID);
                         </div>
                         <div class="profilecontent-holder">
                             <div class="community-links">
-                                <a href="" class="no-deco-link">1. Always apply basic etiquette.</a>
-                                <hr>
-                                <a href="" class="no-deco-link">2. Submissions must be about UST.</a>
-                                <hr>
-                                <a href="" class="no-deco-link">3. Respect your fellow Thomasians.</a>
-                                <hr>
-                                <a href="" class="no-deco-link">4. Limit NSFW posts, please.</a>
-                                <hr>
-                                <a href="" class="no-deco-link">5. Use downvotes wisely!</a>
-                                <hr>
-                                <a href="" class="no-deco-link">6. No asking for "School Recommendations"</a>
-                                <hr>
-                                <a href="" class="no-deco-link">7. Spread the word!</a>
-                                <hr>
+                                <ol>
+                                    <?php 
+                                    $rules = json_decode($communityInfo['Rules'], true);
+                                    foreach($rules as $key=>$value){ ?>
+                                    <li><a href="" class="no-deco-link"><?php echo $value ?></a></li>
+                                    <hr>
+                                    <?php } ?>
+                                </ol>
                             </div>
                         </div>
                     </div>

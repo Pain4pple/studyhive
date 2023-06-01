@@ -170,6 +170,19 @@ h1{
     box-sizing: border-box;
 }
 
+.create-container{
+    width: 85%;
+    margin-left: 10%;
+    float: left;
+    box-sizing: border-box;
+    border: 3px solid #D9D9D9;
+    border-radius: 30px;
+    padding: 10px;
+    transition: ease .4s;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
 .post-header{
     font-family: 'Montserrat', sans-serif;
     color:#A09F9F;
@@ -182,6 +195,14 @@ h1{
     border-radius:500px;
     height:100%;
     width:5%;
+    border: 3px solid #D9D9D9;
+}
+
+.user-img{
+    float:left;
+    border-radius:500px;
+    height:100%;
+    width:7%;
     border: 3px solid #D9D9D9;
 }
 
@@ -215,6 +236,24 @@ h1{
     text-decoration: none;
 }
 
+.create-holder{
+    margin: 0 auto;
+}
+
+#createInput{
+    width: 75%;
+    float:left;
+    margin-left: 15px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 3px solid #D9D9D9;
+    background-color: transparent; 
+    color:#6B6B6B;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}
+
 .content-holder{
     border-radius: 40px;
     border: 3px solid #D9D9D9;
@@ -241,13 +280,24 @@ h1{
     background: linear-gradient(to bottom, transparent 0%, rgb(255, 255, 255) 100%);
 }*/
 
+.create-container:hover{
+    transition: ease .4s;
+    border-color: #a6a5a5;
+    background: rgb(124,159,163);
+    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+}
+
+.create-container:hover #createInput{
+    transition: ease .4s;
+    border-color: #a6a5a5;
+    background: white;
+}
 
 .content-holder:hover{
     transition: ease .4s;
     border-color: #a6a5a5;
     background: rgb(124,159,163);
     background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
-
 }
 
 .content-holder .title{
