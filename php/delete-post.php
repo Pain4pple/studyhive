@@ -1,48 +1,20 @@
-<?php 
-session_start();
-include "php/db_conn.php";
-include "php/post-query.php";
-include "php/community-query.php";
-include "php/user-query.php";
+<?php
+include "db_conn.php";
+$PostID = trim($_POST['PostID']);
+$sql = "DELETE FROM posts WHERE PostID = '$PostID'";
+mysqli_query($conn, $sql);
+         reloadPostSection();
 
-$session = validateUser();
-
-if($session == true){
+function reloadPostSection(){
+    session_start();
+    include "db_conn.php";
+    include "post-query.php";
+    include "community-query.php";
+    
     $userID = $_SESSION['userID'];
     $userPosts = getUserPosts($userID);
-    loadUser();
-}
-
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap" rel="stylesheet" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="stylesheet" href="css/profile.css" />
-        <title>StudyHive - The Ultimate Scholars' Space</title>
-    </head>
-
-    <body>
-        <div id="nav-placeholder">
-
-        </div>
-        <div class="navigation-space">
-        </div>
-        <div class="main-content">
-            <div id="left-placeholder">
-            </div>
-            <div class="left-space">
-            </div>
-            <div class="mid-section">
-                <?php                 
-                while($postRow = $userPosts->fetch_array()){
-                ?>
+    while($postRow = $userPosts->fetch_array()){
+    ?>
                 <div class="placeholder row">
                     <div class="container">
                         <div class="content-holder">
@@ -117,70 +89,10 @@ if($session == true){
                     <?php }?>
                     });
                     </script>
-                <?php 
-                }
-                ?>
-                <br />
-            </div>
-            <div class="right-section">
-                <?php 
-                    if (isset($_SESSION['userID']) && isset($_SESSION['username']))
-                    {
-                    ?>
-                <div class="hehe" id="hehe">
-                    <div class="profile-container" id="profile-container">
-                        <img class="logoID" src="resources/images/logoID.png" />
-                        <div class="profile-wrapper">
-                            <div class="profile-img-wrapper">
-                                <img class="profile-img" src="<?php echo $_SESSION['profile-img'] ?>" />
-                            </div>
-                            <div class="profile-info-wrapper">
-                                <p class="profile-name"><?php echo $_SESSION['username'] ?></p>
-                                <p class="profile-date">Date Joined: <?php echo $_SESSION['datejoined'] ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bio-container" id="bio-container">
-                        <div class="bio-wrapper">
-                            <p class="bio-header">About me:</p>
-                            <p class="bio-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php }?>
-        </div>
-        </div>
-
-    </body>
-    <!-- jscripts-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js/script.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $(function() {
-            $("#nav-placeholder").load("navbar.php");
-            $("#left-placeholder").load("left-sect.html");
-        });
-
-
-        $('#signup-btn2').click(function() {
-            $('#login-modal').fadeIn().css("display", "flex");
-            $('.modal').animate({
-                height: '640px'
-            });
-            $('.login-form').hide();
-            $('.signup-form').fadeIn();
-        });
-
-        
-        $('#hehe').on("click", function(event) {
-            $('#profile-container').toggleClass('rotate');
-            $('#bio-container').toggleClass('rotate-reset');
-        });
-
-    });
-    </script>
-
-</html>
+    <?php 
+    }
+    ?>
+    <br />
+    <?php
+}
+?>
