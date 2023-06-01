@@ -125,17 +125,22 @@ $comments = getComments($postID);
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <script>
                         $("#commentTo<?php echo $postInfo['PostID']?>").click(function(){
-                          var getText = document.getElementById("commentEditor<?php echo $postInfo['PostID'] ?>").getElementsByClassName("ql-editor");
-                          var text = $(getText).html();
-                          <?php $allow = validateUser(); 
-                                                        
-                          if ($allow==true){?>
-                          $("#commentwrapper<?php echo $postInfo['PostID'] ?>").load("php/add-comment-query.php",{
+                            var getText = document.getElementById("commentEditor<?php echo $postInfo['PostID'] ?>").getElementsByClassName("ql-editor");
+                            <?php $allow = validateUser(); 
+                            if ($allow==true){?>
+                            var text = $(getText).html();
+                            $("#commentwrapper<?php echo $postInfo['PostID'] ?>").load("php/add-comment-query.php",{
                             PostID:<?php echo $postInfo['PostID']?>,
                             UserID:<?php echo $_SESSION['userID']?>,
                             Body:text+"",
-                          });
-                          <?php }?>
+                            });
+                            <?php }
+                            else{?>
+                                $(getText).html("");
+                                $('#login-modal').fadeIn().css("display", "flex");
+                                $('.signup-form').hide();
+                                $('.login-form').fadeIn();                                          
+                            <?php }?>
                         });
                     </script>
                     <div class="comment-wrapper" id="commentwrapper<?php echo $postInfo['PostID'] ?>">
@@ -207,18 +212,23 @@ $comments = getComments($postID);
                                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                                 <script>
                                 $("#submitreplyto<?php echo $commentRow['CommentID'] ?>").click(function(){
-                                  var getText = document.getElementById("replyeditor<?php echo $commentRow['CommentID'] ?>").getElementsByClassName("ql-editor");
-                                  var text = $(getText).html();
-                                  <?php $allow = validateUser(); 
-                                                        
-                                  if ($allow==true){?>
-                                  $("#thread<?php echo $commentRow['CommentID'] ?>").load("php/reply-query.php",{
+                                var getText = document.getElementById("replyeditor<?php echo $commentRow['CommentID'] ?>").getElementsByClassName("ql-editor");
+                                <?php $allow = validateUser(); 
+                                if ($allow==true){?>
+                                var text = $(getText).html();
+                                $("#thread<?php echo $commentRow['CommentID'] ?>").load("php/reply-query.php",{
                                     ParentCommentID:<?php echo $commentRow['CommentID']?>,
                                     PostID:<?php echo $postInfo['PostID']?>,
                                     UserID:<?php echo $_SESSION['userID']?>,
                                     Body:text+"",
-                                  });
-                                  <?php }?>
+                                });
+                                <?php }
+                                else{?>
+                                    $(getText).html("");
+                                    $('#login-modal').fadeIn().css("display", "flex");
+                                    $('.signup-form').hide();
+                                    $('.login-form').fadeIn();                                          
+                                <?php }?>
                                 });
                                 </script>
                             </div>
@@ -300,19 +310,24 @@ $comments = getComments($postID);
                                     <script>
                                         $("#submitnestedreplyto<?php echo $replyRow['ReplyID'] ?>").click(function(){
                                           var getText = document.getElementById("nestedreplyeditor<?php echo $replyRow['ReplyID'] ?>").getElementsByClassName("ql-editor");
-                                          var text = $(getText).html();
                                           <?php $allow = validateUser(); 
-                                                        
-                                          if ($allow==true){?>
-                                          $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
+                                            if ($allow==true){?>
+                                            var text = $(getText).html();
+                                            $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
                                             ParentReplyID:<?php echo $replyRow['ReplyID']?>,
                                             PostID:<?php echo $postInfo['PostID']?>,
                                             UserID:<?php echo $_SESSION['userID']?>,
                                             Body:text+"",
                                             ReplyTo:<?php echo $replierInfo['UserID']?>
-                                          });
-                                        <?php }?>
-                                        });
+                                            });
+                                            <?php }
+                                            else{?>
+                                                $(getText).html("");
+                                                $('#login-modal').fadeIn().css("display", "flex");
+                                                $('.signup-form').hide();
+                                                $('.login-form').fadeIn();                                          
+                                            <?php }?>
+                                            });
                                     </script>
                                     <div class="second-nested-replies" id="nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>">
                                       <?php 
@@ -392,24 +407,25 @@ $comments = getComments($postID);
                                                   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                                                   <script>
                                                       $("#submitsecondnestedreplyto<?php echo $nestedReplyRow['NestedReplyID'] ?>").click(function(){
-                                                        <?php $allow = validateUser(); 
-                                                        if ($allow==true){?>
                                                         var getText = document.getElementById("secondnestedreplyeditor<?php echo $nestedReplyRow['NestedReplyID'] ?>").getElementsByClassName("ql-editor");
-                                                        var text = $(getText).html();
-                                                        $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
-                                                          ParentReplyID:<?php echo $nestedReplyRow['NestedReplyID']?>,
-                                                          PostID:<?php echo $postInfo['PostID']?>,
-                                                          UserID:<?php echo $_SESSION['userID']?>,
-                                                          Body:text+"",
-                                                          ReplyTo:<?php echo $replierInfo['UserID']?>
-                                                        });
-                                                        <?php }
-                                                        else{?>
-                                                            $('#login-modal').fadeIn().css("display", "flex");
-                                                            $('.signup-form').hide();
-                                                            $('.login-form').fadeIn();                                          
-                                                        <?php }?>
-                                                      });
+                                                            <?php $allow = validateUser(); 
+                                                            if ($allow==true){?>
+                                                            var text = $(getText).html();
+                                                            $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
+                                                            ParentReplyID:<?php echo $nestedReplyRow['NestedReplyID']?>,
+                                                            PostID:<?php echo $postInfo['PostID']?>,
+                                                            UserID:<?php echo $_SESSION['userID']?>,
+                                                            Body:text+"",
+                                                            ReplyTo:<?php echo $replierInfo['UserID']?>
+                                                            });
+                                                            <?php }
+                                                            else{?>
+                                                                $(getText).html("");
+                                                                $('#login-modal').fadeIn().css("display", "flex");
+                                                                $('.signup-form').hide();
+                                                                $('.login-form').fadeIn();                                          
+                                                            <?php }?>
+                                                            });
                                                   </script>
                                               </div>
                                           </div>
