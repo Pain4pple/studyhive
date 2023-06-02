@@ -308,16 +308,27 @@ body{
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     padding: 20px;
+    position: relative;
+    height: 100%;
 }
 
 .bio-header{
     font-size:20px;
     color: #101010;
+    width: 100%;
 }
 
-.bio-body{
+#bio-body{
+    width: 100%;
+    height: 200px;
+}
+
+#bio-body img,#bio-body p{
     font-size:15px;
     color: #101010;
+    word-wrap: break-word;
+    width: 100%;
+    object-fit: contain;
 }
 
 .logoID{
@@ -423,7 +434,7 @@ body{
     border-top: 0px !important;
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
-    height: 200px;
+    height: 20vh;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
 }

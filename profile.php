@@ -225,12 +225,14 @@ if(isset($_GET['profUser'])){
                 </div>
                 <div class="bio-container" id="bio-container">
                     <div class="bio-wrapper" id="bio-display">
+                        <div>
                         <p class="bio-header">About me:
                             <a id="bioeditbtn">
                                 Edit
                             </a>
                         </p>
-                        <div id="bio-body"><p class="bio-body"> <?php echo $getUserInfo['Bio'] ?></p></div>
+                        </div>
+                        <div id="bio-body"><p><?php echo $getUserInfo['Bio'] ?></p></div>
                         <input type=button value="Back" class="back-button"
                             id="back-button">
                     </div>
