@@ -8,6 +8,7 @@
       $row = mysqli_fetch_assoc($result);
           $_SESSION['username'] = $row['Username'];
           $_SESSION['profile-img'] = $row['ProfileImage'];
+          $_SESSION['bio'] = $row['Bio'];
           $date = date_create($row['DateJoined']);
           $_SESSION['datejoined'] = date_format($date,"F d, Y");
   
@@ -51,5 +52,13 @@
   }
 
 
+  function checkIfOwner($ID){
+    if ($_SESSION['userID'] == $ID){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   
 ?>

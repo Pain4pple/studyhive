@@ -71,7 +71,7 @@ function getPostInfo($ID){
     return $postInfo = $postInfo->fetch_assoc();
 }
 
-function checkIfOwner($userID,$postID){
+/*function checkIfOwner($userID,$postID){
     include "db_conn.php";
     $sql = "SELECT * FROM posts WHERE PostID = '$postID'";
     $postInfo = mysqli_query($conn, $sql);
@@ -85,5 +85,5 @@ function checkIfOwner($userID,$postID){
     {
         return false;
     }
-}
+}*/
 ?>

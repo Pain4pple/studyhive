@@ -141,7 +141,7 @@ body{
 
 .post-information{    
     float:left;
-    width: 85%;
+    width: 94%;
     color:#6B6B6B;
     font-size: 20px;
     margin-left: 5px;
@@ -233,7 +233,7 @@ body{
     width:calc((2/3)*43vh);
     margin-top: 50px;
     height: 43vh;
-    transform-style: preserve-3d
+    transform-style: preserve-3d;
 }
 
 .profile-container, .bio-container{
@@ -335,13 +335,115 @@ body{
     margin: 0 auto;
     margin-top: 10px;
 }
-.delete{
+.btn-group{
     float: right;
     border: none;
     background-color: transparent;
-    width: 5%;
+    width: 4%;
+}
+#trash{
+    float: right;
+    width: 100%;
+}
+#pencil{
+    float: right;
+    width: 100%;
 }
 
-#trash{
-    fill:#aca8a8
+
+.form-holder{
+    border-radius: 40px;
+    padding: 20px;
+    transition: ease .4s;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.title-input{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 15px;
+    border: 3px solid #D9D9D9;
+    padding: 10px;
+    width: 100%;
+    transition: ease .4s;
+    word-wrap: break-word;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.title-input::-webkit-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:#6C6C6C;
+  }
+  
+  .title-input:-ms-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:#6C6C6C;
+  }
+  
+  .title-input:-moz-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:#6C6C6C;
+  }
+  
+  .title-input::-moz-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color:#6C6C6C;
+  }
+
+  .ql-toolbar{
+    border: 3px solid #d9d9d9 !important;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.posteditor{
+    margin-bottom: 20px;
+    border: 3px solid #d9d9d9 !important;
+    border-top: 0px !important;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    height: 100px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.post-button{
+    transition: ease .4s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color:#949495;
+    font-size: 15px;
+    width: 20%;
+    padding: 10px 5px 10px 5px;
+
+    background-color: transparent;
+    border: 2px solid #D9D9D9;
+    border-radius:500px;
+    cursor: pointer;
+}
+
+.post-button:hover{
+    transition: ease .4s;
+    border-color: #a6a5a5;
+    background: rgb(124,159,163);
+    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+}
+
+.editor-wrapper{
+    margin-bottom: 10px;
+}
+
+#createInput, #posteditor, .post-button, .ql-toolbar{
+    background: white;
 }
