@@ -10,6 +10,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link rel="stylesheet" href="css/main.css" />
         <link rel="stylesheet" href="css/school2.css" />
+        <link rel="icon" type="image/x-icon" href="resources/images/faviconlogo.png">
         <title>StudyHive - The Ultimate Scholars' Space</title>
     </head>
 
@@ -32,17 +33,11 @@
                         <div class="gallery-cell"> <img class="banner-img"
                                 src="/resources/images/banner3.png" />
                         </div>
-                        <div class="gallery-cell"> <img class="banner-img"
-                                src="/resources/images/banner4.png" />
-                        </div>
-                        <div class="gallery-cell"> <img class="banner-img"
-                                src="/resources/images/banner5.png" />
-                        </div>
                     </div>
                 </header>
                 <div class="community-section">
                     <div class="text-space">
-                        <h2>Communities for Schools</h2>
+                        <h2>Communities</h2>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg-grid-cols-3 gap-4 button-group">
                         <div

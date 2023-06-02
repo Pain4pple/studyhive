@@ -28,6 +28,7 @@ $communityInfo = getCommunityInfo($commID);
         <link rel="stylesheet" href="css/school-renderer.css" />
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="resources/images/faviconlogo.png">
         <title>StudyHive - The Ultimate Scholars' Space</title>
     </head>
 
@@ -222,10 +223,7 @@ $communityInfo = getCommunityInfo($commID);
                             </p>
                         </div>
                         <div class="profilecontent-holder">
-                            <div class="content">
-                                <a href="" class="no-deco-link" id="create-post">Create a post</a>
-                            </div>
-                            <hr>
+                            
                         </div>
                     </div>
                     <div class="community-container">

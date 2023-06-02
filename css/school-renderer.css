@@ -162,6 +162,7 @@ h1{
 .no-deco-link{
     text-decoration: none;
     color:inherit;
+    cursor:auto;
 }
 
 .container{
@@ -205,7 +206,7 @@ h1{
     width:5%;
     border: 3px solid #D9D9D9;
     margin-left:20px;
-    margin-top:3px;
+    margin-top:8px;
 }
 
 .post-information{    
@@ -367,8 +368,7 @@ h1{
 .content-holder:hover{
     transition: ease .4s;
     border-color: #a6a5a5;
-    background: rgb(124,159,163);
-    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+    background: transparent;
 }
 
 .content-holder .title{
@@ -402,11 +402,12 @@ h1{
     background-color: #ffffff;
     float: left;
     width: 85%;
-    
+
     padding: 20px;
     border-radius: 30px;
     margin-top: 10px;
     margin-bottom: 20px;
+    border: 3px solid #D9D9D9;
 }
 
 .community-header{
@@ -434,7 +435,7 @@ h1{
     float: left;
     width:5%;
     margin-left:15px;
-    margin-top:10px;
+    margin-top:12px;
     background-color:transparent;
     border-style:none;
 }
@@ -442,7 +443,7 @@ h1{
     float: left;
     width:5%;
     margin-left:10px;
-    margin-top:10px;
+    margin-top:12px;
     background-color:transparent;
     border-style:none;
 }

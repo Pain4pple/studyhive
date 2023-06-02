@@ -22,6 +22,7 @@ if(isset($_GET['profUser'])){
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="css/profile.css" />
+    <link rel="icon" type="image/x-icon" href="resources/images/faviconlogo.png">
     <title>StudyHive - The Ultimate Scholars' Space</title>
 </head>
 

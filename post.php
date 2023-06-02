@@ -27,6 +27,7 @@ $comments = getComments($postID);
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="css/text-editor.css" />
     <link rel="stylesheet" href="css/post.css" />
+    <link rel="icon" type="image/x-icon" href="resources/images/faviconlogo.png">
     <title><?php echo $postRow['Title']?></title>
 </head>
 

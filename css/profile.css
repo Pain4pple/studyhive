@@ -198,8 +198,7 @@ body{
 .content-holder:hover{
     transition: ease .4s;
     border-color: #a6a5a5;
-    background: rgb(124,159,163);
-    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+    background: transparent;
 
 }
 
@@ -474,8 +473,7 @@ body{
 .back-button:hover{
     transition: ease .4s;
     border-color: #a6a5a5;
-    background: rgb(124,159,163);
-    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+    background: transparent;
 }
 
 .done-button{
