@@ -123,12 +123,16 @@ $communityInfo = getCommunityInfo($commID);
                         if ($session==true){?>
                         var text = $(getText).html();
                         var title = $("#title").val();
-                        $(".post-section").load("php/create-post.php",{
+                        $("#post-containerrr").load("php/create-post.php",{
                             CommunityID:<?php echo $communityInfo['CommunityID']?>,
                             UserID:<?php echo $userID?>,
                             Title:title+"",
                             Body:text+"",
                         });
+                         $("#create-wrapper").toggle();
+                         $("#form-holder").toggle();
+                        $("#title").val("");
+                        $('.ql-editor').empty();
                         <?php }
                         else{?>
                             $('#login-modal').fadeIn().css("display", "flex");
@@ -137,6 +141,7 @@ $communityInfo = getCommunityInfo($commID);
                         <?php }?>
                         });
                         </script>
+                    <div id="post-containerrr">
                     <?php 
                     include "php/post-query.php";
                     
@@ -209,6 +214,7 @@ $communityInfo = getCommunityInfo($commID);
                         <?php 
                     }
                     ?>
+                    </div>
                     </div>
                 <div class="right-section">
                     <div class="community-container">

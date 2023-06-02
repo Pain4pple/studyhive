@@ -37,7 +37,7 @@ if(isset($_GET['profUser'])){
         </div>
         <div class="left-space">
         </div>
-        <div class="mid-section">
+        <div class="mid-section" id="mid-section">
             <?php                 
                 while($postRow = $userPosts->fetch_array()){
                 ?>
@@ -48,8 +48,8 @@ if(isset($_GET['profUser'])){
                             <div class="activity-header">
                                 <div>
                                     <?php 
-                                                $communityInfo = getCommunityInfo($postRow['CommunityID']);
-                                                ?>
+                                    $communityInfo = getCommunityInfo($postRow['CommunityID']);
+                                    ?>
                                     <img class="community-img" src="<?php echo $communityInfo['Logo'];?>"
                                         alt="Community Image">
                                 </div>
@@ -134,7 +134,7 @@ if(isset($_GET['profUser'])){
             <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
             <script>
             $(document).ready(function() {
-                $('#edit<?php echo $postRow['PostID'];?>').toggle();
+                $('#edit<?php echo $postRow['PostID'];?>').hide();
             });
 
             var editPost = new Quill("#posteditor<?php echo $postRow['PostID'] ?>", {
@@ -144,9 +144,16 @@ if(isset($_GET['profUser'])){
             $("#delete<?php echo $postRow['PostID'];?>").click(function() {
                 <?php 
                 if ($session==true){?>
-                $(".mid-section").load("php/delete-post.php", {
-                    PostID: <?php echo $postRow['PostID']?>,
-                });
+                     $.post("php/delete-post.php",{
+                        PostID: <?php echo $postRow['PostID']?>,
+                        ProfUser: <?php echo $_GET['profUser']?>,
+                        },
+                        function (data) {
+                            //$("#mid-section").empty();
+                            //$("#mid-section").load(location.href + " #mid-section>*", "");
+                            //$("#mid-section").load(" #mid-section > *");
+                            location.reload();
+                    });
                 <?php }
                 else{?>
                 $('#login-modal').fadeIn().css("display", "flex");

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "db_conn.php";
 
 date_default_timezone_set("Asia/Manila");
@@ -21,6 +22,7 @@ function reloadPostSection($CommunityID){
 include "db_conn.php";
 include "community-query.php";
 include "user-query.php";
+include "post-query.php";
 include "load-button-system.php";
 
 $session = validateUser();
@@ -29,95 +31,7 @@ if($session == true){
     $userID = $_SESSION['userID'];
     loadUser();
 }
-$communityInfo = getCommunityInfo($CommunityID);
-?>
-
-                <div class="placeholder row" id="create-container">
-                        <div class="create-container">
-                            <div class="create-wrapper" id="create-wrapper">
-                                <div class="create-holder">
-                                    <div class="flex-item">
-                                    <?php if ($session == true){ ?>
-                                    <img class="user-img" src="<?php echo $_SESSION['profile-img']?>"
-                                                    alt="User Image">
-                                    <?php } 
-                                    else { ?>
-                                        <img class="user-img" src="/resources/images/empty-avatar.jpg"
-                                                    alt="Empty Avatar">
-                                    <?php }?>
-                                    </div>
-                                    <div class="flex-item input">
-                                    <a id="createpost" class="no-deco-link">
-                                        <input type="text" name="createInput" id="createInput" value="Create a post">
-                                    </a>
-                                    </div>
-                                    <div class="flex-item">
-                                    <button class="attach-picbtn">
-                                    <img class="upload-img"src="resources/images/upload-img.svg"/>
-                                    </button>
-                                    </div>
-                                    <div class="flex-item">
-                                    <button class="attach-linkbtn">
-                                        <img class="attach-link"src="resources/images/link.svg"/>
-                                    </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-holder" id="form-holder">
-                                        <input type="text" class="title-input" name="title" id="title" placeholder="Title">
-                                        <div class="editor-wrapper" id="text-body" name="text-body">
-                                            <div id="posteditor" class="posteditor"></div>
-                                        </div>
-                                        <input type=button value="Cancel" class="post-button" id="cancel">
-                                        <input type=button value="Post" class="post-button" id="post">
-                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                                    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
-                                    <script>
-                                        var quill = new Quill("#posteditor", {
-                                            theme: 'snow'
-                                        });
-                                    </script>
-                            </div>
-                        </div>
-                </div>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                <script>
-                $("#createpost").click(function(){
-                    <?php
-                    if ($session==true){?>
-                        $("#create-wrapper").toggle();
-                        $("#form-holder").toggle();
-                    <?php }
-                    else{?>
-                        $('#login-modal').fadeIn().css("display", "flex");
-                        $('.signup-form').hide();
-                        $('.login-form').fadeIn();                                          
-                    <?php }?>
-                    });
-                
-                $("#post").click(function(){
-                var getText = document.getElementById("posteditor").getElementsByClassName("ql-editor");
-                <?php 
-                if ($session==true){?>
-                var text = $(getText).html();
-                var title = $("#title").val();
-                $(".post-section").load("php/create-post.php",{
-                    CommunityID:<?php echo $communityInfo['CommunityID']?>,
-                    UserID:<?php echo $userID?>,
-                    Title:title+"",
-                    Body:text+"",
-                });
-                <?php }
-                else{?>
-                    $('#login-modal').fadeIn().css("display", "flex");
-                    $('.signup-form').hide();
-                    $('.login-form').fadeIn();                                          
-                <?php }?>
-                });
-                </script>
-            <?php 
-            include "post-query.php";
-            
+$communityInfo = getCommunityInfo($CommunityID);       
             $postResults = getCommunityPosts($CommunityID);
             while($postRow = $postResults->fetch_array()){
             ?>
@@ -184,22 +98,9 @@ $communityInfo = getCommunityInfo($CommunityID);
                     </div>
                     <br />
                 </div>
-                <!-- jscripts-->
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                <script src="js/script.js"></script>
-                <script type="text/javascript">
-                $(document).ready(function() {
-                    $("#form-holder").hide();
-
-                    $("#cancel").click(function(){
-                        $("#create-wrapper").toggle();
-                        $("#form-holder").toggle();
-                    });
-                });
-                </script>
-
                 <?php 
             }
             ?>
+            </div>
 <?php }
 ?>
