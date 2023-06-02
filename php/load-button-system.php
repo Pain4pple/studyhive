@@ -115,33 +115,15 @@ else{
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
      <script>
         $("#upvote<?php echo $postRow['PostID']?>").click(function(){
-        <?php
-        if ($session==true){?>
-            $("#button-system<?php echo $postRow['PostID']?>").load("php/upvote.php",{
-                PostID:<?php echo $postRow['PostID']?>,
-                UserID:<?php echo $UserID?>,
-            });
-        <?php }
-        else{?>
             $('#login-modal').fadeIn().css("display", "flex");
             $('.signup-form').hide();
             $('.login-form').fadeIn();                                          
-        <?php }?>
         });
         
         $("#downvote<?php echo $postRow['PostID']?>").click(function(){
-        <?php 
-        if ($session==true){?>
-            $("#button-system<?php echo $postRow['PostID']?>").load("php/downvote.php",{
-            PostID:<?php echo $postRow['PostID']?>,
-            UserID:<?php echo $UserID?>,
-            });
-        <?php }
-        else{?>
             $('#login-modal').fadeIn().css("display", "flex");
             $('.signup-form').hide();
             $('.login-form').fadeIn();                                          
-        <?php }?>
         });
     </script>
     <?php

@@ -6,12 +6,13 @@ include "php/post-query.php";
 include "php/community-query.php";
 include "php/user-query.php";
 include "php/comment-query.php";
+include "php/load-button-system.php";
 
 $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
 
-$postInfo = getPostInfo($postID);
-$userInfo = getUserInfo($postInfo['UserID']);
-$communityInfo = getCommunityInfo($postInfo['CommunityID']);
+$postRow = getPostInfo($postID);
+$userInfo = getUserInfo($postRow['UserID']);
+$communityInfo = getCommunityInfo($postRow['CommunityID']);
 $comments = getComments($postID);
 ?>
 <!--This html is responsible for rendering the post isolatedly and its comments-->
@@ -26,7 +27,7 @@ $comments = getComments($postID);
         <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         <link rel="stylesheet" href="css/text-editor.css" />
         <link rel="stylesheet" href="css/post.css" />
-        <title><?php echo $postInfo['Title']?></title>
+        <title><?php echo $postRow['Title']?></title>
     </head>
 
     <body>
@@ -54,54 +55,40 @@ $comments = getComments($postID);
                                     <p class="community-name">/<?php echo $communityInfo['ShortName'];?></p>
                                 </a>
                                 <p class="op-info">by <span class="op-name"><?php echo $userInfo['Username']?>
-                                    </span><?php echo getPostAge($postInfo['Date']);?></p>
+                                    </span><?php echo getPostAge($postRow['Date']);?></p>
                                 <div class="hr"></div>
                             </div>
                         </div>
                         <div class="post-holder">
                             <?php 
-                            if($postInfo['Media'] != null || trim($postInfo['Media']) != ""){
+                            if($postRow['Media'] != null || trim($postRow['Media']) != ""){
                             ?>
-                            <p class="post-title" style="font-size:36px"><?php echo $postInfo['Title']?></p>
+                            <p class="post-title" style="font-size:36px"><?php echo $postRow['Title']?></p>
                             <div class="post-content">
-                                <?php echo $postInfo['Body']?>
-                                <img src="<?php echo $postInfo['Media']?>" class="post-media">
+                                <?php echo $postRow['Body']?>
+                                <img src="<?php echo $postRow['Media']?>" class="post-media">
                             </div>
                             <?php 
                             }
                             else{
                             ?>
-                            <p class="post-title"><?php echo $postInfo['Title']?></p>
+                            <p class="post-title"><?php echo $postRow['Title']?></p>
                             <div class="post-content">
-                                <?php echo $postInfo['Body']?>
-                                <img src="<?php echo $postInfo['Media']?>" class="post-media">
+                                <?php echo $postRow['Body']?>
+                                <img src="<?php echo $postRow['Media']?>" class="post-media">
                             </div>
                             <?php }?>
                         </div>
                         <div class="post-footer hr">
-                            <div class="vote-system">
-                                <button id="upvote" class="vote-button upvote row">
-                                    <svg id="upvote-svg" xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                        fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
-                                    </svg>
-                                </button>
-                                <span class="upvote-count"><?php echo $postInfo['UpvoteCount']?></span>
-                                <button id="downvote" class="vote-button downvote row">
-                                    <svg id="downvote-svg" xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                        fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
-                                    </svg>
-                                </button>
+                            <div class="button-system" id="button-system<?php echo $postRow['PostID']?>">
+                                <?php loadButtonSystem($postRow['PostID'])?>
                             </div>
                             <div class="comments"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                     fill="currentColor" class="bi bi-chat-left-fill" viewBox="0 0 16 16">
                                     <path
                                         d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
                                 </svg>
-                                <span class="comment-count">42</span>
+                                <span class="comment-count"><?php echo $postRow['Comments'];?></span>
                             </div>
                             <div class="share">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -116,24 +103,27 @@ $comments = getComments($postID);
                         </div>
                     </div>
                     <div class="add-comment">
-                        <div class="editor-wrapper" id="commenteditorWrapper<?php echo $postInfo['PostID'] ?>">
-                            <div id="commentEditor<?php echo $postInfo['PostID'] ?>" class="editor"></div>
+                        <div class="editor-wrapper" id="commenteditorWrapper<?php echo $postRow['PostID'] ?>">
+                            <div id="commentEditor<?php echo $postRow['PostID'] ?>" class="editor"></div>
                         </div>
                         <button id="add-comment"><span>+</span> Add a Comment</button>
-                        <button id="commentTo<?php echo $postInfo['PostID']?>">Submit</button>
+                        <button id="commentTo<?php echo $postRow['PostID']?>">Submit</button>
                     </div>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                     <script>
-                        $("#commentTo<?php echo $postInfo['PostID']?>").click(function(){
-                            var getText = document.getElementById("commentEditor<?php echo $postInfo['PostID'] ?>").getElementsByClassName("ql-editor");
+                        $("#commentTo<?php echo $postRow['PostID']?>").click(function(){
+                            var getText = document.getElementById("commentEditor<?php echo $postRow['PostID'] ?>").getElementsByClassName("ql-editor");
                             <?php $allow = validateUser(); 
                             if ($allow==true){?>
                             var text = $(getText).html();
-                            $("#commentwrapper<?php echo $postInfo['PostID'] ?>").load("php/add-comment-query.php",{
-                            PostID:<?php echo $postInfo['PostID']?>,
+                            $("#commentwrapper<?php echo $postRow['PostID'] ?>").load("php/add-comment-query.php",{
+                            PostID:<?php echo $postRow['PostID']?>,
                             UserID:<?php echo $_SESSION['userID']?>,
                             Body:text+"",
                             });
+                            $("#commenteditorWrapper<?php echo $postRow['PostID'] ?>").toggle();
+                            $("#commentTo<?php echo $postRow['PostID'] ?>").toggle();
+                            $("#add-comment").text("+ Add a Comment");
                             <?php }
                             else{?>
                                 $(getText).html("");
@@ -142,8 +132,17 @@ $comments = getComments($postID);
                                 $('.login-form').fadeIn();                                          
                             <?php }?>
                         });
+                                    
+                        $("#add-comment").click(function(){
+                            $("#commenteditorWrapper<?php echo $postRow['PostID'] ?>").toggle();
+                            $("#commentTo<?php echo $postRow['PostID'] ?>").toggle();
+                            $(this).text(function(i, text){
+                                return text === "+ Add a Comment" ? "Cancel" : "+ Add a Comment";
+                            })
+                        });
+                        
                     </script>
-                    <div class="comment-wrapper" id="commentwrapper<?php echo $postInfo['PostID'] ?>">
+                    <div class="comment-wrapper" id="commentwrapper<?php echo $postRow['PostID'] ?>">
                       <?php  
                       if (mysqli_num_rows($comments) < 1){
                       }       
@@ -218,7 +217,7 @@ $comments = getComments($postID);
                                 var text = $(getText).html();
                                 $("#thread<?php echo $commentRow['CommentID'] ?>").load("php/reply-query.php",{
                                     ParentCommentID:<?php echo $commentRow['CommentID']?>,
-                                    PostID:<?php echo $postInfo['PostID']?>,
+                                    PostID:<?php echo $postRow['PostID']?>,
                                     UserID:<?php echo $_SESSION['userID']?>,
                                     Body:text+"",
                                 });
@@ -315,7 +314,7 @@ $comments = getComments($postID);
                                             var text = $(getText).html();
                                             $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
                                             ParentReplyID:<?php echo $replyRow['ReplyID']?>,
-                                            PostID:<?php echo $postInfo['PostID']?>,
+                                            PostID:<?php echo $postRow['PostID']?>,
                                             UserID:<?php echo $_SESSION['userID']?>,
                                             Body:text+"",
                                             ReplyTo:<?php echo $replierInfo['UserID']?>
@@ -413,7 +412,7 @@ $comments = getComments($postID);
                                                             var text = $(getText).html();
                                                             $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>").load("php/nested-reply-query.php",{
                                                             ParentReplyID:<?php echo $nestedReplyRow['NestedReplyID']?>,
-                                                            PostID:<?php echo $postInfo['PostID']?>,
+                                                            PostID:<?php echo $postRow['PostID']?>,
                                                             UserID:<?php echo $_SESSION['userID']?>,
                                                             Body:text+"",
                                                             ReplyTo:<?php echo $replierInfo['UserID']?>
@@ -450,7 +449,7 @@ $comments = getComments($postID);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
     <script>
-    var quill = new Quill('#commentEditor<?php echo $postInfo['PostID'] ?>', {
+    var quill = new Quill('#commentEditor<?php echo $postRow['PostID'] ?>', {
         theme: 'snow'
     });
     function callModal(){
@@ -461,9 +460,7 @@ $comments = getComments($postID);
 
     function hidePortion(HidePortionID, ButtonID) {
         let hideportion = document.getElementById(HidePortionID);
-        $(hideportion).toggle("blind", {
-            direction: "up"
-        }, 50);
+        $(hideportion).toggle();
         $(ButtonID).text(function(i, text) {
             return text === "-" ? "+" : "-";
         })
@@ -471,32 +468,14 @@ $comments = getComments($postID);
 
     function toggleEditor(AreaID) {
         let replyarea = document.getElementById(AreaID);
-        $(replyarea).toggle("blind", 200);
+        $(replyarea).toggle();
     }
 
     $(document).ready(function(){
           
-          $("#commenteditorWrapper<?php echo $postInfo['PostID'] ?>").hide();
-          $("#commentTo<?php echo $postInfo['PostID'] ?>").hide();
+          $("#commenteditorWrapper<?php echo $postRow['PostID'] ?>").hide();
+          $("#commentTo<?php echo $postRow['PostID'] ?>").hide();
       
-            
-          $("#add-comment").click(function(){
-            $("#commenteditorWrapper<?php echo $postInfo['PostID'] ?>").toggle("blind",200);
-      
-            $("#commentTo<?php echo $postInfo['PostID'] ?>").toggle();
-      
-            $(this).text(function(i, text){
-              return text === "+ Add a Comment" ? "Cancel" : "+ Add a Comment";
-            })
-          });
-          
-          $("#commentTo<?php echo $postInfo['PostID'] ?>").click(function(){
-            $("#commenteditorWrapper<?php echo $postInfo['PostID'] ?>").toggle("blind",200);
-      
-            $("#commentTo<?php echo $postInfo['PostID'] ?>").toggle();
-      
-            $("#add-comment").text("+ Add a Comment");
-          });
 
           $("#nav-placeholder").load("navbar.php");
           $("#left-placeholder").load("left-sect.html");

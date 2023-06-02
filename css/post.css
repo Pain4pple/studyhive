@@ -129,9 +129,10 @@ body{
     border-radius: 35px;
     border: 2px solid #d9d9d9;
 }
-.vote-system{
+.button-system{
     float:left;
     width:14%;
+    margin-top:-10px;
     display: flex;
     justify-content: left;
     align-items: center;
@@ -144,13 +145,17 @@ body{
     font-size: 1px;
     max-width: calc(100%/3);
 }
+.upvote svg, .downvote svg{
+    width: 25px;
+    height: 25px;
+}
 .upvote,.upvote-count{
     margin-right:5px;
 }
-.upvote:hover{
+.upvote svg:hover{
     color:#8BC34A
 }
-.downvote:hover{
+.downvote svg:hover{
     color:#bc6641
 }
 .comments{
@@ -196,6 +201,10 @@ body{
     border: 2px solid #D9D9D9;
     border-radius:500px;
 }
+
+.hidden {
+    display: none;
+ }
 
 .add-comment button:hover{
     transition: ease .4s;
