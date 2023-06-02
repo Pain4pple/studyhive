@@ -1,154 +1,49 @@
 <?php 
-session_start();
-date_default_timezone_set("Asia/Manila");
-include "php/db_conn.php";
-include "php/post-query.php";
-include "php/community-query.php";
-include "php/user-query.php";
-include "php/comment-query.php";
-include "php/load-button-system.php";
+include "db_conn.php";
+$PostID = trim($_POST['PostID']);
+$ID = trim($_POST['ID']);
+$Type = trim($_POST['Type']);
 
-$postID = isset($_GET['postID']) ? $_GET['postID'] : null;
+if ($Type=="comment"){
+    $sql = "DELETE FROM comments WHERE CommentID = '$ID'";
+    mysqli_query($conn, $sql);
 
-$postRow = getPostInfo($postID);
-$userInfo = getUserInfo($postRow['UserID']);
-$communityInfo = getCommunityInfo($postRow['CommunityID']);
-$comments = getComments($postID);
-?>
-<!--This html is responsible for rendering the post isolatedly and its comments-->
-<!DOCTYPE html>
-<html lang="en">
+    $sql = "UPDATE posts SET Comments = Comments-1 WHERE PostID = '$PostID'";
+    mysqli_query($conn, $sql);
+    reloadComments($PostID);
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/text-editor.css" />
-    <link rel="stylesheet" href="css/post.css" />
-    <title><?php echo $postRow['Title']?></title>
-</head>
+else if ($Type=="nested"){
+    $sql = "DELETE FROM replies WHERE ReplyID = '$ID'";
+    mysqli_query($conn, $sql);
 
-<body>
-    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
-    <div id="nav-placeholder">
-    </div>
-    <div class="navigation-space">
-    </div>
-    <div class="main-content">
-        <div id="left-placeholder">
-        </div>
-        <div class="left-space">
-        </div>
-        <div class="mid-section ">
-            <div class="post">
-                <div class="wrapper">
-                    <div class="post-header">
-                        <div>
-                            <img class="community-img" src="<?php echo $communityInfo['Logo']?>" alt="Community Image">
-                        </div>
-                        <div class="post-information">
-                            <a href="school-renderer.php?commID=<?php echo $communityInfo['CommunityID']?>"
-                                class="link-line">
-                                <p class="community-name">/<?php echo $communityInfo['ShortName'];?></p>
-                            </a>
-                            <p class="op-info">by <span class="op-name"><?php echo $userInfo['Username']?>
-                                </span><?php echo getPostAge($postRow['Date']);?></p>
-                            <div class="hr"></div>
-                        </div>
-                    </div>
-                    <div class="post-holder">
-                        <?php 
-                            if($postRow['Media'] != null || trim($postRow['Media']) != ""){
-                            ?>
-                        <p class="post-title" style="font-size:36px"><?php echo $postRow['Title']?></p>
-                        <div class="post-content">
-                            <?php echo $postRow['Body']?>
-                            <img src="<?php echo $postRow['Media']?>" class="post-media">
-                        </div>
-                        <?php 
-                            }
-                            else{
-                            ?>
-                        <p class="post-title"><?php echo $postRow['Title']?></p>
-                        <div class="post-content">
-                            <?php echo $postRow['Body']?>
-                            <img src="<?php echo $postRow['Media']?>" class="post-media">
-                        </div>
-                        <?php }?>
-                    </div>
-                    <div class="post-footer hr">
-                        <div class="button-system" id="button-system<?php echo $postRow['PostID']?>">
-                            <?php loadButtonSystem($postRow['PostID'])?>
-                        </div>
-                        <div class="comments"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                fill="currentColor" class="bi bi-chat-left-fill" viewBox="0 0 16 16">
-                                <path
-                                    d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                            </svg>
-                            <span class="comment-count"><?php echo $postRow['Comments'];?></span>
-                        </div>
-                        <div class="share">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                class="bi bi-upload" viewBox="0 0 16 16">
-                                <path
-                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                <path
-                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-                            </svg>
-                            <span class="share-link">Share</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="add-comment">
-                    <div class="editor-wrapper" id="commenteditorWrapper<?php echo $postRow['PostID'] ?>">
-                        <div id="commentEditor<?php echo $postRow['PostID'] ?>" class="editor"></div>
-                    </div>
-                    <button id="add-comment"><span>+</span> Add a Comment</button>
-                    <button id="commentTo<?php echo $postRow['PostID']?>">Submit</button>
-                </div>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                <script>
-                $("#commentTo<?php echo $postRow['PostID']?>").click(function() {
-                    var getText = document.getElementById("commentEditor<?php echo $postRow['PostID'] ?>")
-                        .getElementsByClassName("ql-editor");
-                    <?php $allow = validateUser(); 
-                            if ($allow==true){?>
-                    var text = $(getText).html();
-                    $("#commentwrapper<?php echo $postRow['PostID'] ?>").load("php/add-comment-query.php", {
-                        PostID: <?php echo $postRow['PostID']?>,
-                        UserID: <?php echo $_SESSION['userID']?>,
-                        Body: text + "",
-                    });
-                    $("#commenteditorWrapper<?php echo $postRow['PostID'] ?>").toggle();
-                    $("#commentTo<?php echo $postRow['PostID'] ?>").toggle();
-                    $("#add-comment").text("+ Add a Comment");
-                    <?php }
-                            else{?>
-                    $(getText).html("");
-                    $('#login-modal').fadeIn().css("display", "flex");
-                    $('.signup-form').hide();
-                    $('.login-form').fadeIn();
-                    <?php }?>
-                });
+    $sql = "UPDATE posts SET Comments = Comments-1 WHERE PostID = '$PostID'";
+    mysqli_query($conn, $sql);
+    reloadComments($PostID);
+}
 
-                $("#add-comment").click(function() {
-                    $("#commenteditorWrapper<?php echo $postRow['PostID'] ?>").toggle();
-                    $("#commentTo<?php echo $postRow['PostID'] ?>").toggle();
-                    $(this).text(function(i, text) {
-                        return text === "+ Add a Comment" ? "Cancel" : "+ Add a Comment";
-                    })
-                });
-                </script>
-                <div class="comment-wrapper" id="commentwrapper<?php echo $postRow['PostID'] ?>">
-                    <?php  
-                      if (mysqli_num_rows($comments) < 1){
-                      }       
-                      else
-                      while($commentRow = $comments->fetch_array()){
-                        $commenterInfo = getCommenterInfo($commentRow['UserID']);
-                      ?>
+else if ($Type=="secondnest"){
+    $sql = "DELETE FROM nestedreplies WHERE NestedReplyID = '$ID'";
+    mysqli_query($conn, $sql);
+
+    $sql = "UPDATE posts SET Comments = Comments-1 WHERE PostID = '$PostID'";
+    mysqli_query($conn, $sql);
+    reloadComments($PostID);
+}
+function reloadComments($ID){
+    session_start();
+    include "db_conn.php";
+    include "post-query.php";
+    include "community-query.php";
+    include "user-query.php";
+    include "comment-query.php";
+    date_default_timezone_set("Asia/Manila");
+    
+    $comments = getComments($ID);
+    $postRow = getPostInfo($ID);
+    while($commentRow = $comments->fetch_array()) {
+        $commenterInfo = getCommenterInfo($commentRow['UserID']);
+        ?>
                     <div class="comment-group">
                         <div class="parent-comment">
                             <div class="comment-header">
@@ -482,51 +377,13 @@ $comments = getComments($postID);
                                 ?>
                         </div>
                     </div>
-                </div>
-                <?php } ?>
-            </div>
-        </div>
-    </div>
-    </div>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
-var quill = new Quill('#commentEditor<?php echo $postRow['PostID'] ?>', {
-    theme: 'snow'
-});
-
-function callModal() {
-    $('#login-modal').fadeIn().css("display", "flex");
-    $('.signup-form').hide();
-    $('.login-form').fadeIn();
-}
-
-function hidePortion(HidePortionID, ButtonID) {
-    let hideportion = document.getElementById(HidePortionID);
-    $(hideportion).toggle();
-    $(ButtonID).text(function(i, text) {
-        return text === "-" ? "+" : "-";
-    })
-}
-
-function toggleEditor(AreaID) {
-    let replyarea = document.getElementById(AreaID);
-    $(replyarea).toggle();
-}
-
 $(document).ready(function() {
-
-    $("#commenteditorWrapper<?php echo $postRow['PostID'] ?>").hide();
-    $("#commentTo<?php echo $postRow['PostID'] ?>").hide();
-
-
-    $("#nav-placeholder").load("navbar.php");
-    $("#left-placeholder").load("left-sect.html");
+    $(".reply-editor-wrapper").hide();
+    $(".editor-wrapper").hide();
 });
 </script>
-<script src="js/jquery-ui-1.13.2.custom/jquery-ui.js"></script>
-<script src="js/script.js"></script>
-<script src="js/post.js"></script>
-
-</html>
+<?php } ?>
+<?php
+}
+?>

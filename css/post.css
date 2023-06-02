@@ -202,8 +202,16 @@ body{
     border-radius:500px;
 }
 
-.hidden {
-    display: none;
+.delete-link {
+    float: right;
+    cursor: pointer;
+    transition: ease .4s;
+    color: #cacaca;
+ }
+
+ .delete-link:hover {
+    transition: ease .4s;
+    color: #363333;
  }
 
 .add-comment button:hover{
@@ -240,7 +248,7 @@ body{
 }
 .comment-info{
     float:left;
-    width:90%;
+    width:100%;
     margin-left: 1%;
 
     font-size: 14px;

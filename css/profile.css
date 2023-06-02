@@ -418,6 +418,18 @@ body{
     font-weight: 500;
 }
 
+.bioeditor{
+    margin-bottom: 20px;
+    border: 3px solid #d9d9d9 !important;
+    border-top: 0px !important;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    height: 200px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+
 .post-button{
     transition: ease .4s;
     font-family: 'Montserrat', sans-serif;
@@ -440,10 +452,78 @@ body{
     background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
 }
 
+.back-button{
+    transition: ease .4s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color:#949495;
+    font-size: 15px;
+    width: 20%;
+    padding: 10px 5px 10px 5px;
+
+    background-color: transparent;
+    border: 2px solid #D9D9D9;
+    border-radius:500px;
+    cursor: pointer;
+
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 15px;
+}
+
+.back-button:hover{
+    transition: ease .4s;
+    border-color: #a6a5a5;
+    background: rgb(124,159,163);
+    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+}
+
+.done-button{
+    transition: ease .4s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color:#949495;
+    font-size: 15px;
+    width: 20%;
+    padding: 10px 5px 10px 5px;
+
+    background-color: transparent;
+    border: 2px solid #D9D9D9;
+    border-radius:500px;
+    cursor: pointer;
+
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 15px;
+}
+
+.done-button:hover{
+    transition: ease .4s;
+    border-color: #a6a5a5;
+    background: rgb(124,159,163);
+    background: linear-gradient(0deg, rgba(124,159,163,0.2763480392156863) 0%, rgba(239,235,224,0.23713235294117652) 73%);
+}
+
+
 .editor-wrapper{
     margin-bottom: 10px;
 }
 
 #createInput, #posteditor, .post-button, .ql-toolbar{
     background: white;
+}
+
+#bioeditbtn{
+    float: right;
+    text-transform: lowercase;
+    cursor: pointer;
+    font-style: italic;
+    color: #b9b9b9;
+    font-size: small;
+    margin-top: 5px;
+}
+
+#bioeditbtn:hover{
+    transition: ease .4s;
+    color: rgb(90, 90, 90);
 }
