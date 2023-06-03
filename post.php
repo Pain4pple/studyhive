@@ -54,7 +54,8 @@ $comments = getComments($postID);
                                 class="link-line">
                                 <p class="community-name">/<?php echo $communityInfo['ShortName'];?></p>
                             </a>
-                            <p class="op-info">by <span class="op-name"><?php echo $userInfo['Username']?>
+                            <p class="op-info">by <span class="op-name"> <a href="profile.php?profUser=<?php echo $userInfo['UserID']?>"
+                                class="link-line"><?php echo $userInfo['Username']?></a>
                                 </span><?php echo getPostAge($postRow['Date']);?></p>
                             <div class="hr"></div>
                         </div>

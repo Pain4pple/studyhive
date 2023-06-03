@@ -56,15 +56,19 @@ include "php/load-button-system.php";
                                                 
                                                 <span class="op-info">•
                                                 posted by
-                                                <span class="op-name"><?php 
+                                                <span class="op-name">
+                                                <?php 
                                                 $op = $postRow['UserID'];
     
                                                 $sql2 = "SELECT * FROM user WHERE UserID = '$op' LIMIT 1";
                                                 $OPResults = mysqli_query($conn, $sql2);
                                                 $OPInfo = $OPResults->fetch_assoc();
-                                                
+                                                ?>
+                                                <a href="profile.php?profUser=<?php echo $OPInfo['UserID']?>" class="link-line">
+                                                <?php 
                                                 echo $OPInfo['Username'];
-                                                ?></span> <?php echo getPostAge($postRow['Date']);?></span></p>
+                                                ?>
+                                                </a></span> <?php echo getPostAge($postRow['Date']);?></span></p>
                                         <div class="hr"></div>
                                     </div>
                                 </div>
