@@ -3,4 +3,4 @@ A blog-forum website our group developed for our Finals' Course Inquiry Project 
 
 PS: We are absolute noobs so this is buggy as hell
 
-team: @pain4pple, @tarovinl, and @mcsnette
+team: @pain4pple (Lara Nicole Gatchalian), @tarovinl (Kevin Kyle Coraza), and @mcsnette (Minette Chavez)
