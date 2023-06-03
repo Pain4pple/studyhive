@@ -53,12 +53,18 @@
 
 
   function checkIfOwner($ID){
-    if ($_SESSION['userID'] == $ID){
-      return true;
-    }
-    else{
+    if (isset($_SESSION['userID']) && isset($_SESSION['sessID'])){
+      if ($_SESSION['userID'] == $ID){
+        return true;
+      }
+      else{
+        return false;
+      }
+  }
+  else{
       return false;
-    }
+  }
+    
   }
   
 ?>

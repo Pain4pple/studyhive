@@ -164,7 +164,6 @@ $comments = getComments($postID);
                                     $allow = validateUser();
                                     if($allow == true){
                                         $owner = checkIfOwner($commenterInfo['UserID']);
-                                    }
                                     if($owner==true){?>
                                     <a id="trash-comment<?php echo $commentRow['CommentID'] ?>"
                                         class="delete-link">Delete</a>
@@ -180,7 +179,7 @@ $comments = getComments($postID);
                                             });
                                     });
                                     </script>
-                                    <?php }?>
+                                    <?php }}?>
                                 </div>
                             </div>
                             <div class="comment-content">
@@ -248,7 +247,7 @@ $comments = getComments($postID);
                                 while($replyRow = $replies->fetch_array()){
                                   $replierInfo = getCommenterInfo($replyRow['UserID']);
                                 ?>
-                                <div class="child-comment" id="child-comment<?php echo $commentRow['CommentID'] ?>">
+                                <div class="child-comment">
                                     <div class="comment-header">
                                         <img class="commenter-img" src="<?php echo $replierInfo['ProfileImage'];?>"
                                             alt="Community Image">
@@ -260,7 +259,7 @@ $comments = getComments($postID);
                                             $allow = validateUser();
                                             if($allow == true){
                                                 $owner = checkIfOwner($replierInfo['UserID']);
-                                            }
+                                            
                                             if($owner==true){?>
                                             <a id="nested-trash-comment<?php echo $replyRow['ReplyID'] ?>"
                                                 class="delete-link">Delete</a>
@@ -278,7 +277,7 @@ $comments = getComments($postID);
                                                     });
                                             });
                                             </script>
-                                            <?php }?>
+                                            <?php }}?>
                                         </div>
                                     </div>
                                     <!--div class="vr" style="height:100vh;border-left:2px solid #d9d9d9"></div-->
@@ -454,7 +453,7 @@ $comments = getComments($postID);
                                                         <?php $allow = validateUser(); 
                                                             if ($allow==true){?>
                                                         var text = $(getText).html();
-                                                        $("#nestedreplywrapper<?php echo $replyRow['ReplyID'] ?>")
+                                                        $("#nestedreplywrapper<?php echo $nestedReplyRow['NestedReplyID'] ?>")
                                                             .load("php/nested-reply-query.php", {
                                                                 ParentReplyID: <?php echo $nestedReplyRow['NestedReplyID']?>,
                                                                 PostID: <?php echo $postRow['PostID']?>,
